@@ -14,7 +14,7 @@ enum vga_colour {
     VGA_COLOUR_RED = 4,
     VGA_COLOUR_MAGENTA = 5,
     VGA_COLOUR_BROWN = 6,
-    // you can use grey in place of gray, fyi (i think)
+    // you can use grey in place of gray, fyi (i think i cant be arsed to test it)
     VGA_COLOUR_LIGHT_GRAY = 7,
     VGA_COLOUR_DARK_GRAY = 8,
     // not regular colours

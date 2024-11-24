@@ -23,6 +23,15 @@ size_t strlen(const char* str) {
     return len;
 }
 
+int strcmp(const char *s1, const char *s2) {
+	const unsigned char *p1 = ( const unsigned char * )s1;
+	const unsigned char *p2 = ( const unsigned char * )s2;
+	
+	while ( *p1 && *p1 == *p2 ) ++p1, ++p2;
+	
+    return ( *p1 > *p2 ) - ( *p2  > *p1 );
+}
+
 void text_init(void) {
     terminal_row = 0;
     terminal_column = 0;
@@ -46,13 +55,21 @@ void terminal_putentryat(char c, uint8_t colour, size_t x, size_t y) {
 }
 
 void terminal_putchar(char c) {
-    terminal_putentryat(c, terminal_colour, terminal_column, terminal_row);
-    if (++terminal_column == VGA_WIDTH) {
+    if (c == '\n') {
         terminal_column = 0;
-        if (++terminal_row == VGA_HEIGHT)
+        if (++terminal_row == VGA_HEIGHT) {
             terminal_row = 0;
+        }
+    } else {
+        terminal_putentryat(c, terminal_colour, terminal_column, terminal_row);
+        if (++terminal_column == VGA_WIDTH) {
+            terminal_column = 0;
+            if (++terminal_row == VGA_HEIGHT)
+                terminal_row = 0;
+        }
     }
 }
+
 
 void terminal_write(const char* data, size_t size) {
     for (size_t i = 0; i < size; i++)

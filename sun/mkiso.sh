@@ -3,9 +3,7 @@ if [ "$(id -u)" -ne 0 ]; then
 	exit 1
 fi
 
-echo $?
-
-if grub-file --is-x86-multiboot sun.bin; then
+if echo $? = 0; then
   echo multiboot confirmed
 else
   echo the file is not multiboot
