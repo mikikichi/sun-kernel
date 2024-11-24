@@ -1,2 +1,2 @@
-# sun-kernel
-The Saturn Kernel Source Tree
+# Sun Kernel
+The Sun Kernel Source Tree
