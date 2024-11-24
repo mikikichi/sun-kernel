@@ -5,11 +5,20 @@ The Sun Kernel Source Tree
 To build, run `build.sh` then `mkiso.sh` as root and finally `run.sh`
 ignore the errors, it *should* build fine
 
+alternatively, just run `automate.sh` and it will do it all for you (sudo privelleges required)
+
+you do require an 1686-elf cross-compiler, look at this to find out how to set it up: https://wiki.osdev.org/GCC_Cross-Compiler
 please note that you require a Unix environment (specifically, Linux but could run on other ones) for these scripts to work
 
 # File organisation
 the 'os' folder contains every part of the kernel in C code
 the 'bin' folder is where all the compiled binaries are
+
+# Credits
+Most things here are original, but some things have been taken from other sources, so here is the credits:
+OSDev Guide (https://wiki.osdev.org/Expanded_Main_Page)
+GhattOS 2.0 and Ghatto (https://github.com/ghatt-o/GhattOSv2)
+ChatGPT (https://chatgpt.com/)
 
 # Licensing
 The Sun Kernel is licensed under the GPL 3.0 license, which in short means:
