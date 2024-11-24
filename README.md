@@ -16,9 +16,9 @@ the 'bin' folder is where all the compiled binaries are
 
 # Credits
 Most things here are original, but some things have been taken from other sources, so here is the credits:
-OSDev Guide (https://wiki.osdev.org/Expanded_Main_Page)
-GhattOS 2.0 and Ghatto (https://github.com/ghatt-o/GhattOSv2)
-ChatGPT (https://chatgpt.com/)
+* OSDev Guide (https://wiki.osdev.org/Expanded_Main_Page)
+* GhattOS 2.0 and Ghatto (https://github.com/ghatt-o/GhattOSv2)
+* ChatGPT (https://chatgpt.com/)
 
 # Licensing
 The Sun Kernel is licensed under the GPL 3.0 license, which in short means:
