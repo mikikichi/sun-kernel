@@ -1,7 +1,7 @@
 #ifndef LOG_H
 #define LOG_H
 
-#include "print.h"
+#include "vgabuffer.h"
 
 // Function prototype for the error function
 void sys_error(const char* message);
