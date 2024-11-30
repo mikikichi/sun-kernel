@@ -7,7 +7,7 @@ ignore the errors, it *should* build fine
 
 alternatively, just run `automate.sh` and it will do it all for you (sudo privelleges required)
 
-you do require an 1686-elf cross-compiler, look at this to find out how to set it up: https://wiki.osdev.org/GCC_Cross-Compiler
+you do require an i686-elf cross-compiler, look at this to find out how to set it up: https://wiki.osdev.org/GCC_Cross-Compiler
 please note that you require a Unix environment (specifically, Linux but could run on other ones) for these scripts to work
 
 # File organisation
