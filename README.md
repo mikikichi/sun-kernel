@@ -2,13 +2,7 @@
 The Sun Kernel Source Tree
 
 # Building
-To build, run `build.sh` then `mkiso.sh` as root and finally `run.sh`
-ignore the errors, it *should* build fine
-
-alternatively, just run `automate.sh` and it will do it all for you (sudo privelleges required)
-
-you do require an i686-elf cross-compiler, look at this to find out how to set it up: https://wiki.osdev.org/GCC_Cross-Compiler
-please note that you require a Unix environment (specifically, Linux but could run on other ones) for these scripts to work
+use ld and nasm
 
 # File organisation
 the 'os' folder contains every part of the kernel in C code
