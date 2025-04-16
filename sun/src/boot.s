@@ -32,9 +32,6 @@ global _start
 section     .text
 bits 32
 
-section .data
-msg     db "Paging works!", 0xa
-msg1     db "GDT works!", 0xa
 _start:
 
     ; LEVEL 4 PAGE TABLE
@@ -63,8 +60,6 @@ _start:
 
     mov ecx, 0
 
-    print msg, 0x0A
-    print msg1, 0x0A
 .map_p2_table:
     mov eax, 0x200000 ; 2MiB
     ; each page is 2 MiB in size so to ge tthe right memory
@@ -109,6 +104,21 @@ _start:
     ; technically in long mode now but not really, currently in compatibility mode
     ; to get to real long mode there needs need to be a GDT (look at OSDev site if your unsure)
 
+    ; into long mode
+
+    ; update selectors
+    mov ax, gdt64.data ; data part of GDT goes in here (a 16 bit register) as
+    ; the data part of the GDT is made of 16 bit values
+    mov ss, ax 
+    mov ds, ax ; points to data segment of the GDT
+    mov es, ax ; unused but still need to be set
+
+    jmp gdt64.code:long_mode_start
+
+    ; ss = stack segment register
+    ; ds = data segment register
+    ; es = extra segment register
+
 section .bss ; linker sets everything to 0 in bss
 align 4096 ; aligns addresses to be a multiple of 4096
 p4_table:
@@ -117,6 +127,9 @@ p3_table:
     resb 4096
 p2_table:
     resb 4096
+stack_bottom:
+    resb 4096
+stack_top:
 
 ; my paging is basically from intermezzOS because:
 ; A. it works
@@ -152,3 +165,19 @@ gdt64:
 .pointer:
     dw .pointer - gdt64 - 1
     dq gdt64
+
+; 64 bit land from here on out - scary
+; remember theres no 'eax' or 'ebx' or any of that prehistoric stuff
+; we now have the groundbreaking 'rax' and 'rbx'
+
+section .text
+bits 64
+
+section .data
+msg     db "stack setup.", 0xa
+msg1    db "Paging works.", 0xa
+msg2    db "the global descriptor table works.", 0xa
+msg3    db "sixty four bit long mode works.", 0xa
+
+long_mode_start:
+hlt
