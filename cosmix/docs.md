@@ -25,7 +25,15 @@ compilation.sh provides a good example on how to compile the OS, and can be copi
 # Issues, complaints, etc
 Put them in the issues tab on GitHub.
 
+# Required tools
+nasm (or any other assembler, but this uses nasm syntax)
+qemu
+ld (included in binutils package)
+xorriso
+grub-mkrescue (included in grub package)
+
 # Credits
 https://github.com/GBX9570/sun-kernel/
 GBX9570 - Project leader/Programmer
 Ghatt-O - Programmer
+cavnbinpkg - Programmer
