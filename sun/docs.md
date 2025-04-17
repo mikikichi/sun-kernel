@@ -4,6 +4,13 @@ Sun - a kernel made of ducttape and prayers
 okay nerds here is the actual serious readme
 
 # Requirements
+* nasm
+* x86_64 cross compiler (gcc AND binutils, https://wiki.osdev.org/GCC_Cross-Compiler)
+* ld (part of binutils)
+* qemu (or any other virtualisation software)
+* xorriso
+* grub-mkrescue (part of grub package)
+* 
 
 # Compile the OS
 run compilation.sh to get a full and complete sun kernel iso
@@ -18,16 +25,17 @@ but realistically it is MUCH easier to do Operating System Development on someth
 id strongly recommend using one of these (or even a BSD or some other unix like)
 
 # File Layout
-in src/ you will find all the uncompiled source code
-in src/compiled, you will find linker.ld. compilation.sh builds to here, so it is recommended you do too
-in isofiles/build you will find kernel.bin (when using compilation.sh). all kernel.bin files must go here when making an iso.
-in isofiles/build/grub you will find the grub configuration file, here you can edit the name or boot options.
-compilation.sh provides a good example on how to compile the OS, and can be copied if compiling manually for whatever reason.
+* in src/ you will find all the uncompiled source code
+* in src/compiled, you will find linker.ld. compilation.sh builds to here, so it is recommended you do too
+* in isofiles/build you will find kernel.bin (when using compilation.sh). all kernel.bin files must go here when making an iso.
+* in isofiles/build/grub you will find the grub configuration file, here you can edit the name or boot options.
+* compilation.sh provides a good example on how to compile the OS, and can be copied if compiling manually for whatever reason.
 
 # Issues, complaints, etc
 Put them in the issues tab on GitHub.
 
 # Credits
-https://github.com/GBX9570/sun-kernel/
-GBX9570 - Project leader/Programmer
-Ghatt-O - Programmer
+* https://github.com/GBX9570/sun-kernel/
+* GBX9570 - Project leader/Programmer
+* Ghatt-O - Programmer
+* cavnbinpkg - Programmer
