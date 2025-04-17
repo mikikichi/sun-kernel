@@ -29,6 +29,7 @@ global _start
 
 
 %include 'print.s'
+
 section     .text
 bits 32
 
@@ -173,6 +174,8 @@ gdt64:
 section .text
 bits 64
 
+extern kernel_main
+
 section .data
 msg     db "stack setup.", 0xa
 msg1    db "Paging works.", 0xa
@@ -180,4 +183,4 @@ msg2    db "the global descriptor table works.", 0xa
 msg3    db "sixty four bit long mode works.", 0xa
 
 long_mode_start:
-hlt
+    call kernel_main
