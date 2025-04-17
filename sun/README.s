@@ -35,6 +35,7 @@
 ;
 ; #5 would C not be more practical?
 ; yes, refer to question one.
+; edit - okay so a few days later i have actually implemented a C file so its not entirely assembly (in fact it probably wont have much more asm from here)
 ;
 ; for compilation and all that stuff, go to
 ; docs.md.
