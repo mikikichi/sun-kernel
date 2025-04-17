@@ -27,11 +27,19 @@
 
 global _start
 
-
 %include 'print.s'
 
 section     .text
 bits 32
+
+section .data
+global pageinc
+global gdtinc
+global longinc
+
+pageinc:    db 0
+gdtinc:     db 0
+longinc:    db 0
 
 _start:
 
@@ -60,6 +68,8 @@ _start:
     mov dword [p3_table + 0], eax
 
     mov ecx, 0
+
+    mov byte [pageinc], 1
 
 .map_p2_table:
     mov eax, 0x200000 ; 2MiB
@@ -114,8 +124,8 @@ _start:
     mov ds, ax ; points to data segment of the GDT
     mov es, ax ; unused but still need to be set
 
+    mov byte [gdtinc], 1
     jmp gdt64.code:long_mode_start
-
     ; ss = stack segment register
     ; ds = data segment register
     ; es = extra segment register
@@ -183,4 +193,6 @@ msg2    db "the global descriptor table works.", 0xa
 msg3    db "sixty four bit long mode works.", 0xa
 
 long_mode_start:
+    mov rsp, stack_top
+    mov byte [longinc], 1
     call kernel_main
