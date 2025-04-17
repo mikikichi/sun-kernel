@@ -17,7 +17,7 @@ run compilation.sh to get a full and complete sun kernel iso
 
 # Compile individual files
 to compile individual files, i personally recommend you use nasm (i can't make you but its all nasm syntax) on a unix like
-operating system, the target is elf32 and the linker.ld is in src/compiled - that folder is there for a reason please use it
+operating system, the target is elf64 and the linker.ld is in src/compiled - that folder is there for a reason please use it
 
 # Windows users
 install a unix compatibility layer like Cygwin (https://www.cygwin.com/) or WSL2 and work on it like your using Linux.
