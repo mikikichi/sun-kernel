@@ -28,4 +28,4 @@ echo "Moving kernel to ISO folder"
 mv kernel.bin ../../isofiles/boot/kernel.bin
 cd ../../
 echo "Creating ISO..."
-grub-mkrescue -o cosmix.iso isofiles
+grub-mkrescue -o sun.iso isofiles
