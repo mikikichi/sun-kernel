@@ -1,5 +1,7 @@
 #include <stdbool.h>
 #include "libs/print.h"
+#include "libs/log.h"
+#include "libs/keyboard.h"
 
 extern unsigned char pageinc;
 extern unsigned char gdtinc;
@@ -7,22 +9,40 @@ extern unsigned char longinc;
 
 void kernel_main(void) 
 {
+    text_init();
 
-	if (pageinc == 1) {
-        printf("[ OKAY ] Paging has started\n");
+    success("Kernel is UP\n");
+
+    if (pageinc == 1) {
+        begin("Paging has started\n");
     } else {
-        printf("[ FAIL ] Paging could not start.\n");
+        fatal("Paging could not start.\n");
     }
 
     if (gdtinc == 1) {
-        printf("[ OKAY ] GDT has loaded\n");
+        begin("GDT has loaded\n");
     } else {
-        printf("[ FAIL ] GDT failed\n");
+        fatal("GDT failed\n");
     }
 
     if (longinc == 1) {
-        printf("[ OKAY ] Long mode entered\n");
+        begin("Long mode entered\n");
     } else {
-        printf("[ FAIL ] Long mode failed\n");
+        fatal("Long mode failed\n");
     }
+
+    printf("keyboard loop running\n");
+
+    while(1) {
+        char input[256];
+        printf("enter text> ");
+        read_line(input, 256);
+        printf("\n");
+        printf("you typed:\n");
+        printf(input);
+        printf("\n");
+    }
+
+    fatal("Nothing more to do.\n");
+
 }

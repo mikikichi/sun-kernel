@@ -13,11 +13,7 @@
 All third party code is used in accordance with their respective licenses. Any disputes
 should be put in the Issues section on the GitHub repository of the Sun Kernel Source Tree.
 
-- **mpaland/printf**
-   - *License:* MIT License (https://opensource.org/license/mit)
-   - *Source:* https://github.com/mpaland/printf
-   - *Creators:* Mpaland
-   - *Summary:*  Tiny, fast, non-dependent and fully loaded printf implementation for embedded systems. Extensive test suite passing.
+nothing here right now
 
 # Tools
 - **GCC**

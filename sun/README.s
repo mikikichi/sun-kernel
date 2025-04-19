@@ -35,6 +35,7 @@
 ;
 ; #5 would C not be more practical?
 ; yes, refer to question one.
+; edit - unfortunately assembly was too impractical so now we use C :(
 ;
 ; for compilation and all that stuff, go to
 ; docs.md.
