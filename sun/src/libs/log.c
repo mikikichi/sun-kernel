@@ -37,13 +37,19 @@ void begin(const char* message) {
 }
 
 void fatal(const char* message) {
-    printcolour(vga_entry_colour(VGA_COLOUR_WHITE, VGA_COLOUR_RED));
-    printf("[ !! ] ");
-    printcolour(vga_entry_colour(VGA_COLOUR_WHITE, VGA_COLOUR_BLACK));
-    printf(message);
-    printcolour(vga_entry_colour(VGA_COLOUR_WHITE, VGA_COLOUR_RED));
-    printf(" System is halting NOW");
-    while (1) {
-        __asm__ __volatile__("hlt");
+
+    terminal_row = 0;
+    terminal_column = 0;
+    terminal_colour = vga_entry_colour(VGA_COLOUR_WHITE, VGA_COLOUR_RED);
+    terminal_buffer = (uint16_t*) 0xB8000;
+    for (size_t y = 0; y < VGA_HEIGHT; y++) {
+        for (size_t x = 0; x < VGA_WIDTH; x++) {
+            const size_t index = y * VGA_WIDTH + x;
+            terminal_buffer[index] = vga_entry(' ', terminal_colour);
+        }
     }
+    printf("Sun Kernel 0.0.2 - build date 19/4/2025\n");
+    printf("[ FATAL ERROR ] ");
+    printf(message);
+    printf("\n");
 }

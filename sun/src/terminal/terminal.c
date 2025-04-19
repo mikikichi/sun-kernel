@@ -23,7 +23,7 @@ void terminal() {
         // father forgive me for i have sinned, i have nested if statements
 
         if(strcmp(input, "exit") == 0) {
-            end();
+            halt();
         } else if(strcmp(input, "hello") == 0) {
                 printf("Hello, World!\n");
         } else if(strcmp(input, "version") == 0) {

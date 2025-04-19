@@ -76,33 +76,32 @@ char ScanCodeToASCII(uint8_t scan_code, bool shift) {
 
 char sys_read()
 {
-    // wait for a key press
-    while (!(inb(0x64) & 0x01)); // output buffer must be full! wait
+    while (!(inb(0x64) & 0x01));
 
     uint8_t scan_code = inb(0x60);
     
-    if (scan_code == 0x2A || scan_code == 0x36) {  // Left Shift (0x2A)
-        shift_pressed = true;  // Set shift pressed
-        return 0; // return a reserved value; we're waiting for a key press
+    if (scan_code == 0x2A || scan_code == 0x36) { 
+        shift_pressed = true;
+        return 0;
     } 
-    if (scan_code == 0x36) {  // Right Shift (0x36)
-        shift_pressed = true;  // Set shift pressed
-        return 0; // return a reserved value; we're waiting for a key press
+    if (scan_code == 0x36) {  
+        shift_pressed = true;  
+        return 0; 
     } 
-    else if (scan_code == 0xAA || scan_code == 0xB6) { // Left Shift Release (0xAA) or Right Shift Release (0xB6)
+    else if (scan_code == 0xAA || scan_code == 0xB6) { 
         shift_pressed = false;
-        return 0; // return a reserved value; we're waiting for a key press
+        return 0; 
     }
     else {
-        char c = ScanCodeToASCII(scan_code, shift_pressed); // can return characters like \n too
+        char c = ScanCodeToASCII(scan_code, shift_pressed); 
         return c;
     }    
 }
 
 void print_input(const char* str) {
-    while (*str) {  // While there's a character in the string
-        terminal_putchar(*str);  // Output the current character
-        str++;  // Move to the next character
+    while (*str) {  
+        terminal_putchar(*str); 
+        str++; 
     }
 }
 
@@ -114,25 +113,23 @@ void read_line(char* buffer, int max_len) {
     while (1) {
         char c = sys_read();
 
-        // Skip reserved values (like when shift is pressed/released)
         if (c == 0)
             continue;
 
-        if (c == '\n') { // Enter key pressed
+        if (c == '\n') {
             buffer[index] = '\0';
             return;
         }
 
-        if (c == '\b') { // Backspace
+        if (c == '\b') {
             if (index > 0) {
                 index--;
                 buffer[index] = '\0';
-                // (Optional: handle visual backspace on screen here)
             }
         } else if (index < max_len - 1) {
             buffer[index++] = c;
-            terminal_putchar(c); // Echo the character to the screen
-            // (Optional: echo char to screen here)
+            terminal_putchar(c);
+
         }
     }
 }

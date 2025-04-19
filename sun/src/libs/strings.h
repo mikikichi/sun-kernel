@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
-int strcmp(const char *str1, const char *str2);
+int strcmp(const char *s1, const char *s2);
+void uint8_to_string(uint8_t num, char* str);
 
 #endif
