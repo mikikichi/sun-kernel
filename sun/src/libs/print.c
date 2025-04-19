@@ -36,7 +36,7 @@ int strcmp(const char *s1, const char *s2) {
     return ( *p1 > *p2 ) - ( *p2  > *p1 );
 }
 
-void text_init(void) {
+void clear(void) {
     terminal_row = 0;
     terminal_column = 0;
     terminal_colour = vga_entry_colour(VGA_COLOUR_LIGHT_GRAY, VGA_COLOUR_BLACK);

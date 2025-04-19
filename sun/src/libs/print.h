@@ -34,7 +34,7 @@ typedef enum vga_colour vga_color;
 uint8_t vga_entry_colour(enum vga_colour fg, enum vga_colour bg);
 uint16_t vga_entry(unsigned char uc, uint8_t colour);
 size_t strlen(const char* str);
-void text_init(void);
+void clear(void);
 void printcolour(uint8_t colour);
 void terminal_putentryat(char c, uint8_t colour, size_t x, size_t y);
 void terminal_putchar(char c);
