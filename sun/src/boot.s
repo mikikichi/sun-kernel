@@ -138,16 +138,18 @@ p3_table:
     resb 4096
 p2_table:
     resb 4096
-stack_bottom:
-    resb 4096
-stack_top:
-    align 16
 
 ; my paging is basically from intermezzOS because:
 ; A. it works
 ; B. i am way out of my depth trying to attempt it
 ; yes i know i should NOT be doing OSDev then but
 ; whatever i enjoy it
+
+.stack:
+stack_bottom:
+    resb 4096
+stack_top:
+    align 16
 
 
 ;GDT TIME
@@ -186,12 +188,6 @@ section .text
 bits 64
 
 extern kernel_main
-
-section .data
-msg     db "stack setup.", 0xa
-msg1    db "Paging works.", 0xa
-msg2    db "the global descriptor table works.", 0xa
-msg3    db "sixty four bit long mode works.", 0xa
 
 long_mode_start:
     mov rsp, stack_top
