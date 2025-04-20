@@ -141,6 +141,7 @@ p2_table:
 stack_bottom:
     resb 4096
 stack_top:
+    align 16
 
 ; my paging is basically from intermezzOS because:
 ; A. it works

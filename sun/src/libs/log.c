@@ -1,5 +1,6 @@
 #include "log.h"
 #include "print.h"
+#include "strings.h"
 
 void error(const char* message) {
     printcolour(vga_entry_colour(VGA_COLOUR_RED, VGA_COLOUR_BLACK));
@@ -36,6 +37,23 @@ void begin(const char* message) {
     printf(message);
 }
 
+char last_executed_function[64] = "Unknown";
+
+void func(const char* name) {
+    strncpy(last_executed_function, name, sizeof(last_executed_function) - 1);
+    last_executed_function[sizeof(last_executed_function) - 1] = '\0';
+}
+
+void printfunc() {
+    printf("Last executed function: ");
+    printf(last_executed_function);
+    printf("\n");
+
+    if (strcmp(last_executed_function, "Unknown") == 0) {
+        printf("(If this is empty, then it is likely a critical component in boot.s. Report this in the GitHub issues page.)\n");
+    }
+}
+
 void fatal(const char* message) {
 
     terminal_row = 0;
@@ -48,6 +66,7 @@ void fatal(const char* message) {
             terminal_buffer[index] = vga_entry(' ', terminal_colour);
         }
     }
+    asm volatile("cli");
     printf("Sun Kernel 0.0.2 - build date 19/4/2025\n");
     printf("[ FATAL ERROR ] ");
     printf(message);

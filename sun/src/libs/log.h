@@ -7,5 +7,7 @@ void info(const char* message);
 void success(const char* message);
 void begin(const char* message);
 void fatal(const char* message);
+void func (const char* func);
+void printfunc();
 
 #endif
