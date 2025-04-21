@@ -15,6 +15,7 @@ x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/14.2.0/include -ffreestanding -
 x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/14.2.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c idt/idt.c -o compiled/idt.o
 x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/14.2.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c idt/isr.c -o compiled/isrc.o
 x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/14.2.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c libs/string.c -o compiled/string.o
+x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/14.2.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c libs/serial.c -o compiled/serial.o
 echo "Assembling boot.s"
 nasm -f elf64 boot.s -o compiled/boot.o
 echo "Assembling mheaders.s"

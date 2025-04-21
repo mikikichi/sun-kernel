@@ -38,7 +38,7 @@ void idt_set_descriptor(uint8_t vector, void* isr, uint8_t flags) {
     descriptor->reserved       = 0;
 }
 
-static bool vectors[31];
+static bool vectors[256];
 extern void* isr_stub_table[];
 
 void idt_init(void);

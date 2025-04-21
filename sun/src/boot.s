@@ -145,11 +145,11 @@ p2_table:
 ; yes i know i should NOT be doing OSDev then but
 ; whatever i enjoy it
 
-.stack:
+section .stack:
+align 16
 stack_bottom:
     resb 4096
 stack_top:
-    align 16
 
 
 ;GDT TIME

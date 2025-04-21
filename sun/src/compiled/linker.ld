@@ -27,21 +27,22 @@ SECTIONS {
     .bss ALIGN(8) :
     {
         *(.bss)
+
+
+        *(COMMON)
+       . = ALIGN(4096);
     }
 
     .stack ALIGN(16) :
     {
-        . = . + 0x1000;
+        PROVIDE(stack_bottom = .);
+        *(.stack)
+        PROVIDE(stack_top = .);
     }
 
     .rodata ALIGN(16) :
     {
         *(.rodata)
-    }
-
-    .pointer ALIGN(8) :
-    {
-        *(.pointer)
     }
 
     .long_mode_start :

@@ -67,7 +67,7 @@ void fatal(const char* message) {
         }
     }
     asm volatile("cli");
-    printf("Sun Kernel 0.0.2 - build date 19/4/2025\n");
+    printf("Sun Kernel 0.0.2 - build date 20/4/2025\n");
     printf("[ FATAL ERROR ] ");
     printf(message);
     printf("\n");
