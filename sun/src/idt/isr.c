@@ -11,8 +11,6 @@ __attribute__((noreturn))
 void exception_handler(uint8_t vector);
 void exception_handler(uint8_t vector) {
 
-    fatal("Exception Occurred!");
-
     switch(vector) {
         case 0:
             const char* msg0 = "EXCEPTION: division by zero.";

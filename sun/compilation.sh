@@ -4,6 +4,7 @@ cd src
 rm -f compiled/*.o
 echo "Compiling C files"
 x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c libs/print.c -o compiled/print.o
+x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c gdt/gdt.c -o compiled/gdtc.o
 x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c libs/io.c -o compiled/io.o
 x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c kernel.c -o compiled/kernel.o
 x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c libs/log.c -o compiled/log.o
@@ -15,6 +16,8 @@ x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -ffreestanding -
 x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c idt/isr.c -o compiled/isrc.o
 x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c libs/string.c -o compiled/string.o
 x86_64-elf-gcc -I ~/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -ffreestanding -Wall -Werror -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -c libs/serial.c -o compiled/serial.o
+echo "Assembling gdt.s"
+nasm -f elf64 gdt/gdt.s -o compiled/gdt.o
 echo "Assembling boot.s"
 nasm -f elf64 boot.s -o compiled/boot.o
 echo "Assembling mheaders.s"
@@ -29,6 +32,6 @@ mv kernel.bin ../../isofiles/boot/kernel.bin
 cd ../../
 echo "Creating ISO..."
 grub-mkrescue -o sun.iso isofiles
-echo Ignore errors about grub2, this is for compatibility with Fedora Linux
+echo "Ignore errors about grub2, this is for compatibility with Fedora Linux"
 grub2-mkrescue -o sun.iso isofiles
-echo success!
+echo "success!"

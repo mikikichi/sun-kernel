@@ -28,6 +28,8 @@
 global _start
 
 %include 'print.s'
+extern setGDT
+extern reloadSegments
 
 section     .text
 bits 32
@@ -111,7 +113,8 @@ _start:
     or eax, 1 << 31
     or eax, 1 << 16
     mov cr0 , eax
-    lgdt [gdt64.pointer]
+    setGDT
+    reloadSegments
     ; technically in long mode now but not really, currently in compatibility mode
     ; to get to real long mode there needs need to be a GDT (look at OSDev site if your unsure)
 
@@ -153,36 +156,6 @@ stack_top:
 
 
 ;GDT TIME
-
-section .rodata ; read only data
-gdt64:
-    dq 0
-.code: equ $ - gdt64 
-;.code us the name of this label, and the period tells nasm that its part of the previous label, so this isn't 'code' this is' 'gdt64.code'
-    dq (1<<44) | (1<<47) | (1<<41) | (1<<43) | (1<<53) 
-    ; executable, 64 bit, readable, present
-
-    ; (1<<#) means left shift 1 by #, eg (1<<44) would set the 44th bit
-    ; | is an or statement but cause this is data and not assembly instructions we use | not or
-
-
-    ; 44: ‘descriptor type’: This has to be 1 for code and data segments
-    ; 47: ‘present’: This is set to 1 if the entry is valid
-    ; 41: ‘read/write’: If this is a code segment, 1 means that it’s readable
-    ; 43: ‘executable’: Set to 1 for code segments
-    ; 53: ‘64-bit’: if this is a 64-bit GDT, this should be set
-
-.data: equ $ - gdt64
-    dq (1<<44) | (1<<47) | (1<<41)
-    ; present, readable
-
-.pointer:
-    dw .pointer - gdt64 - 1
-    dq gdt64
-
-; 64 bit land from here on out - scary
-; remember theres no 'eax' or 'ebx' or any of that prehistoric stuff
-; we now have the groundbreaking 'rax' and 'rbx'
 
 section .text
 bits 64
