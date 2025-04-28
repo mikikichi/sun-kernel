@@ -8,12 +8,6 @@
    - *Creators:* GBX9570, Ghatt-O, cavnbinpkg
    - *Summary:* The Source Code of the Sun Kernel.
 
-- **The 3TK Kernel Design**
-   - *License:* 2-clause BSD License (https://opensource.org/license/bsd-2-clause)
-   - *Source:* https://github.com/GBX9570/3TK-design
-   - *Creators:* GBX9570
-   - *Summary:* A new and innnovative kernel design for speed and stability.
-
 # Third Party Code
 
 All third party code is used in accordance with their respective licenses. Any disputes
