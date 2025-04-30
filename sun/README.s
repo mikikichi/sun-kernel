@@ -32,6 +32,7 @@
 ; with an assembly project tells me you are
 ; not experienced enough in C to deserve an
 ; answer. lookup inline asm.
+; (in all seriousness, C is completely compatible with assembly - you should have no issues)
 ;
 ; #5 would C not be more practical?
 ; yes, refer to question one.
