@@ -38,4 +38,4 @@ Put them in the issues tab on GitHub.
 * https://github.com/GBX9570/sun-kernel/
 * GBX9570 - Project leader/Programmer
 * Ghatt-O - Programmer
-* cavnbinpkg - Programmer
+* mikikichi - Programmer
