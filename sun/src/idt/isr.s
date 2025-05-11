@@ -35,7 +35,7 @@ isr_stub_%+%1:
     pop rcx
     pop rbx
     pop rax
-    iretq
+    iret
 %endmacro
 
 %macro isr_no_err_stub 1
@@ -74,7 +74,7 @@ isr_stub_%+%1:
     pop rcx
     pop rbx
     pop rax
-    iretq
+    iret
 %endmacro
 
 ; exception handlers

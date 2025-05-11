@@ -2,51 +2,33 @@ ENTRY(_start)
 
 SECTIONS {
 
-    . = 1M;
+    . = 2M;
 
-    .boot ALIGN(0x1000) :
+    .boot :
     {
         *(.multiboot_header)
     }
 
-    .text ALIGN(0x1000) :
+    .text :
     {
         *(.text)
     }
 
-    .data ALIGN(8) :
+    .data :
     {
         *(.data)
     }
 
-    .map_p2_table ALIGN(0x1000) :
-    {
-        *(.map_p2_table)
-    }
-
-    .bss ALIGN(8) :
+    .bss :
     {
         *(.bss)
-
 
         *(COMMON)
        . = ALIGN(4096);
     }
 
-    .stack ALIGN(16) :
-    {
-        PROVIDE(stack_bottom = .);
-        *(.stack)
-        PROVIDE(stack_top = .);
-    }
-
-    .rodata ALIGN(16) :
+    .rodata :
     {
         *(.rodata)
-    }
-
-    .long_mode_start :
-    {
-        *(.long_mode_start)
     }
 }

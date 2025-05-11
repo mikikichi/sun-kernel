@@ -5,6 +5,7 @@
 #include "idt/idt.h"
 #include "terminal/programs/exit.h"
 #include "libs/serial.h"
+#include <stdarg.h>
 
 extern unsigned char pageinc;
 extern unsigned char gdtinc;
@@ -13,7 +14,6 @@ extern unsigned char idtinc;
 
 void kernel_main(void) 
 {
-
     clear();
 
     idt_init();

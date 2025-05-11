@@ -29,7 +29,7 @@ global _start
 
 %include 'print.s'
 
-section     .text
+section .text
 bits 32
 
 section .data
@@ -42,6 +42,9 @@ gdtinc:     db 0
 longinc:    db 0
 
 _start:
+
+setup_stack:
+    mov esp, stack_end
 
     ; LEVEL 4 PAGE TABLE
     mov eax, p3_table ; this copies the contents of the third level page table into the eax reg
@@ -131,7 +134,13 @@ _start:
     ; es = extra segment register
 
 section .bss ; linker sets everything to 0 in bss
+
 align 4096 ; aligns addresses to be a multiple of 4096
+
+stack_top:
+    resb 4096
+stack_end:
+
 p4_table:
     resb 4096 ; reserves 4096 bytes
 p3_table:
@@ -144,12 +153,6 @@ p2_table:
 ; B. i am way out of my depth trying to attempt it
 ; yes i know i should NOT be doing OSDev then but
 ; whatever i enjoy it
-
-section .stack:
-align 16
-stack_bottom:
-    resb 4096
-stack_top:
 
 
 ;GDT TIME
@@ -188,8 +191,9 @@ section .text
 bits 64
 
 extern kernel_main
+extern vbe_set_mode
 
 long_mode_start:
-    mov rsp, stack_top
     mov byte [longinc], 1
+    mov rsp, stack_top
     call kernel_main

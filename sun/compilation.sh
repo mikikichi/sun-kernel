@@ -23,7 +23,8 @@ echo "Assembling isr.s"
 nasm -f elf64 idt/isr.s -o compiled/isr.o
 cd compiled
 echo "Linking kernel"
-x86_64-elf-gcc -T linker.ld -o kernel.bin -ffreestanding -O2 -nostdlib *.o -lgcc
+x86_64-elf-gcc -T linker.ld -o kernel.bin -ffreestanding -O2 -nostdlib *.o -lgcc --entry=_start
+
 echo "Moving kernel to ISO folder"
 mv kernel.bin ../../isofiles/boot/kernel.bin
 cd ../../
