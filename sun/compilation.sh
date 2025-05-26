@@ -32,5 +32,4 @@ echo "Creating ISO..."
 grub-mkrescue -o sun.iso isofiles
 echo Ignore errors about grub2, this is for compatibility with Fedora Linux
 grub2-mkrescue -o sun.iso isofiles
-echo running...
-qemu-system-x86_64 -d int,cpu_reset -D qemu-debug.log -cdrom sun.iso
+echo success!
