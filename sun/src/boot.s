@@ -29,7 +29,6 @@ global _start
 
 %include 'print.s'
 
-section .text
 bits 32
 
 section .data
@@ -40,6 +39,8 @@ global longinc
 pageinc:    db 0
 gdtinc:     db 0
 longinc:    db 0
+
+section .text
 
 _start:
 
@@ -126,8 +127,6 @@ setup_stack:
     mov ss, ax 
     mov ds, ax ; points to data segment of the GDT
     mov es, ax ; unused but still need to be set
-
-    mov byte [gdtinc], 1
     jmp gdt64.code:long_mode_start
     ; ss = stack segment register
     ; ds = data segment register
@@ -191,9 +190,9 @@ section .text
 bits 64
 
 extern kernel_main
-extern vbe_set_mode
 
 long_mode_start:
     mov byte [longinc], 1
+    mov byte [gdtinc], 1
     mov rsp, stack_top
     call kernel_main

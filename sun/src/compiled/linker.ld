@@ -2,11 +2,19 @@ ENTRY(_start)
 
 SECTIONS {
 
-    . = 2M;
+    . = 1M;
 
-    .boot :
+    .multiboot_header ALIGN(8) :
     {
-        *(.multiboot_header)
+        KEEP(*(.multiboot_header))
+    }
+
+    .bss :
+    {
+        *(.bss)
+
+        *(COMMON)
+       . = ALIGN(4096);
     }
 
     .text :
@@ -17,14 +25,6 @@ SECTIONS {
     .data :
     {
         *(.data)
-    }
-
-    .bss :
-    {
-        *(.bss)
-
-        *(COMMON)
-       . = ALIGN(4096);
     }
 
     .rodata :

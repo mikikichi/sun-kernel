@@ -39,6 +39,13 @@ int is_transmit_empty() {
 }
 
 void write_serial(char a) {
-        while(is_transmit_empty() == 0);
-        outb(PORT,a);
+    if (a == '\n') write_serial('\r');
+    while (!is_transmit_empty());
+    outb(PORT, a);
+}
+
+void serial_print(const char* str) {
+    while (*str) {
+        write_serial(*str++);
+    }
 }
