@@ -1,4 +1,4 @@
-bits 32
+bits 64
 
 
 global lgdtset
@@ -12,22 +12,28 @@ gdtr dw 0
 section .text
 
 lgdtset:
-mov ax, [esp + 4]
-mov [gdtr], ax
 
-mov eax, [esp + 8]
-mov [gdtr + 2], eax
 lgdt [gdtr]
-call [complete]
+call flush
 ret
 
-flush:
-push 0x08 ;0x08 code segment index 1 privelege 00 bit moves < 
-;far return??
+;When executing a far return, the processor pops the return instruction pointer from the top of the stack into the EIP register,
+;then pops the segment selector from the top of the stack into the CS register. The processor then begins program execution in the
+;new code segment at the new instruction pointer.
 
-complete:
-mov ax, 0x10 ;data segment index 2 this is from the C file 
-mov ss, ax 
+
+flush:
+
+lea rax, [rel .refresh]                                 ;this is the same as rip + refresh because nasm knows to create a rip
+push rax
+push 0x08
+retq
+
+.refresh
+mov ax, 0x10
 mov ds, ax
-mov es, ax 
+mov es, ax
+mov fs, ax
+mov gs, ax
+mov ss, ax                   ;these are all segment registers
 ret

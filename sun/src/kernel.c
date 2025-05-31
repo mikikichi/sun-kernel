@@ -8,6 +8,7 @@
 #include "idt/idt.h"
 #include "terminal/programs/exit.h"
 #include "libs/serial.h"
+#include "gdtheaders.h"
 
 extern unsigned int gdtinc;
 extern unsigned int pageinc;
@@ -22,7 +23,7 @@ void kernel_main() {
 
     success("Running in long mode.\n");
 
-    gdtinc = 1;
+	gdtinc = 1;
 
     if(gdtinc == 1) {
         success("GDT has loaded\n");

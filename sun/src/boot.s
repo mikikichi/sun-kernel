@@ -1,6 +1,6 @@
 
 global _start
-extern set_entries
+extern lgdt
 extern kernel_main
 extern vbe_set_mode
 %include "print.s"
@@ -12,6 +12,7 @@ section .data
 global pageinc
 global gdtinc
 global longinc
+
 
 pageinc:    db 0
 gdtinc:     db 0
@@ -63,7 +64,9 @@ _start:
     or eax, 1 << 31
     or eax, 1 << 16
     mov cr0 , eax
-    call set_entries
+
+	call lgdt
+
 
 
 section .bss

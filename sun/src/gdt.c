@@ -58,6 +58,8 @@ void set_entries() {
   g.length = 23;
   g.base = (uint64_t)(uintptr_t)&segment_add;
 
+
   extern void lgdtset(gdtr *ptr); 
   lgdtset(&g);
+
 }
