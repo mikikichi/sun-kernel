@@ -1,6 +1,6 @@
 
 global _start
-extern lgdt
+extern gdt_pointer
 extern kernel_main
 extern vbe_set_mode
 %include "print.s"
@@ -19,7 +19,6 @@ gdtinc:     db 0
 longinc:    db 0
 
 _start:
-
     ; LEVEL 4 PAGE TABLE
     mov eax, p3_table 
     or eax , 0b11 
@@ -38,7 +37,7 @@ _start:
 .map_p2_table:
     mov eax, 0x200000 ; 2MiB
     mul ecx 
-
+    or eax, 0b10000011 
     mov [p2_table + ecx * 8], eax
 
     inc ecx 
@@ -65,7 +64,22 @@ _start:
     or eax, 1 << 16
     mov cr0 , eax
 
-	call lgdt
+
+section .data
+gdt:
+.null_entry: equ $ - gdt
+
+dq 0x0000000000000000                      ;null
+.kernel_code: equ $ - gdt
+
+dq 0x00AF9A000000FFFF                     ;kernel code
+.kernel_data: equ $ - gdt                
+
+dq 0x00CF92000000FFFF                  
+
+.gdt_pointer:
+   dw $ - gdt - 1               ;limit 16bit
+   dq gdt                             ;base 64bit
 
 
 
@@ -84,14 +98,23 @@ stack_bottom:
 stack_top:
     align 16
 
+section .text
+lgdt [gdt_pointer]
+jmp gdt.kernel_code:long_mode_start
 
 
 section .text
 bits 64
 
-
-
-;long_mode_start:
+long_mode_start:
     mov rsp, stack_top
+    mov ax, gdt.kernel_data
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax                  
+
+    mov byte [gdtinc], 1
     mov byte [longinc], 1
     call kernel_main
