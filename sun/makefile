@@ -1,5 +1,5 @@
-CC := /mnt/d/HorizonOS/deps/llvm/build/bin/clang       
-LD := /mnt/d/HorizonOS/deps/llvm/build/bin/ld.lld
+CC := clang       
+LD := ld.lld
 ASM := nasm
 
 INCLUDE := -Isrc -Ideps/freestand-c-hdrs/x86_64/include
