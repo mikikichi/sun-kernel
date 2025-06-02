@@ -1,16 +1,15 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stddef.h>
-#include "../libs/log.h"
-#include "../terminal/programs/exit.h"
-#include "../libs/strings.h"
-#include "../libs/print.h"
-#include "../libs/serial.h"
-#include "../exception/exceptionhandler.h"
+#include "libs/log.h"
+#include "terminal/programs/exit.h"
+#include "libs/strings.h"
+#include "libs/print.h"
+#include "libs/serial.h"
+#include "exception/exceptionhandler.h"
 
 __attribute__((noreturn))
-void exception_handler(uint8_t vector);
-void exception_handler(uint8_t vector) {
+extern void exception_handler(uint8_t vector) {
 
     fatal("Exception Occurred!");
     switch(vector) {

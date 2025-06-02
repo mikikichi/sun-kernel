@@ -1,13 +1,10 @@
-#include <stdbool.h>
-#include "../libs/print.h"
-#include "../libs/log.h"
-#include "../libs/keyboard.h"
-#include "../libs/strings.h"
+#include "terminal.h"
+#include "libs/strings.h"
 #include "programs/exit.h"
 #include "programs/version.h"
 #include "programs/serialterm.h"
 #include "programs/fail.h"
-#include "../exception/exceptionhandler.h"
+#include "exception/exceptionhandler.h"
 
 void terminal() {
     begin("Terminal began\n");

@@ -1,18 +1,4 @@
-
-#include "libs/log.h"
-#include <stdint.h>
-
-
-typedef struct __attribute__((packed)) {
-  uint16_t limit_low;
-  uint16_t base_low;
-  uint8_t base_mid;
-  uint8_t access;
-  uint8_t limit_high;
-  uint8_t flags;
-  uint8_t base_high;
-
-} entry;
+#include "gdtheaders.h"
 
 entry segment_add;
 uint8_t *target = (uint8_t *)&segment_add;

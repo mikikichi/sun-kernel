@@ -1,79 +1,64 @@
-CC := x86_64-elf-gcc       
-LD := x86_64-elf-gcc
+CC := /mnt/d/HorizonOS/deps/llvm/build/bin/clang       
+LD := /mnt/d/HorizonOS/deps/llvm/build/bin/ld.lld
 ASM := nasm
-INCLUDE := -I$(HOME)/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -I$(HOME)/sun-kernel/sun/src/libs -I$(HOME)/sun-kernel/sun/src/terminal -I$(HOME)/sun-kernel/sun/src/idt 
-INCLUDEASM := $(HOME)/sun-kernel/sun/src
 
-LINKSCRIPT := -T linker.ld
-ASMFLAGS := -f elf64
-CFLAGS := -ffreestanding -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone
+INCLUDE := -Isrc -Ideps/freestand-c-hdrs/x86_64/include
+INCLUDEASM := src
 
-LINKERFLAGS := -ffreestanding -O2 -nostdlib
+ASMFLAGS := -f elf64 -g
+CFLAGS := -ffreestanding -m64 -O2 -g -nostdlib -nostdinc -fno-exceptions -fno-rtti -fno-omit-frame-pointer -march=x86-64 -fPIE -fPIC -mno-red-zone -mgeneral-regs-only -static --target=x86_64-none-elf
+
+LINKSCRIPT := -T res/linker.ld
+LINKERFLAGS := -static -nostdlib
 WARNFLAGS := -Wall -Werror
 
-ROOT := $(HOME)/sun-kernel/sun
-SRCDIRECTORIES := $(ROOT)/src 
-COMPILED := $(HOME)/sun-kernel/sun/src/compiled
+SRCDIRECTORIES := src 
+COMPILED := out
+ISODIR := iso
+
+KERNEL := $(ISODIR)/root/boot/kernel.bin
 
 SRCFILES := $(shell find $(SRCDIRECTORIES) -type f -name '*.c')
 ASMFILES := $(shell find $(SRCDIRECTORIES) -type f -name "*.s")
 
+OBJFILESC := $(patsubst src/%.c, out/%.c.o, $(SRCFILES))
+OBJFILESA := $(patsubst src/%.s, out/%.s.o, $(ASMFILES))
 
-OBJFILESC := $(patsubst %.c, %.o, $(SRCFILES))
-OBJFILESA := $(patsubst %.s,%.o,$(ASMFILES))
-
-
-DEPC := $(patsubst %.c,%.d,$(SRCFILES))
+DEPC := $(patsubst src/%.c, out/%.c.d, $(SRCFILES))
 
 -include $(DEPC) 
 
 OBJLIST := $(OBJFILESC) $(OBJFILESA)
 
+all: iso
 
-all: clean $(OBJFILESC) $(OBJFILESA) link move iso run
-
-.PHONY: clean move link isomove run test
-
-
-test:
-	@"Clearing .d files"
-	-@$(RM) $(wildcard $(SRCDIRECTORIES)/*.d)
-
-
+.PHONY: clean
 
 clean:
 	@echo "Cleaning..."
-	-@$(RM) $(wildcard $(COMPILED)/*.o)
+	@rm -rf $(COMPILED) $(ISODIR)
 
-
-%.o: %.c 
+out/%.c.o: src/%.c 
+	@echo "Compiling $<"
+	@mkdir -p $(dir $@)
 	@$(CC) $(INCLUDE) $(CFLAGS) $(WARNFLAGS) -MMD -MP -c $< -o $@
 
-%.o: %.s
-
+out/%.s.o: src/%.s
+	@echo "Assembling $<"
+	@mkdir -p $(dir $@)
 	@$(ASM) -i $(INCLUDEASM) $(ASMFLAGS) $< -o $@
 
-
-link: $(OBJLIST)
+$(KERNEL): $(OBJLIST)
 	@echo "Linking..."
-	@$(CC) $(LINKERFLAGS) $(LINKERSCRIPT) -o kernel.bin  $(OBJLIST) -lgcc
+	@mkdir -p $(ISODIR)/root/boot
+	@$(LD) $(LINKERFLAGS) $(LINKERSCRIPT) -o $(ISODIR)/root/boot/kernel.bin $(OBJLIST)
 
-move:
-	@echo "Moving to compiled"
-
-	-@for file in $(OBJLIST); do \
-		mv $$file $(COMPILED); \
-	done
-
-
-iso:
-	@echo "Moving ISO"
-	@mv kernel.bin $(HOME)/sun-kernel/sun/isofiles/boot
+iso: $(KERNEL)
 	@echo "Creating ISO..."
-
-	@grub2-mkrescue -o sun.iso $(HOME)/sun-kernel/sun/isofiles
-
+	@cp -r res/grub $(ISODIR)/root/boot
+	@mkdir -p $(ISODIR)/out
+	@grub-mkrescue -o $(ISODIR)/out/Sun.iso $(ISODIR)/root
 
 run: 
 	@echo "Running..."
-	@qemu-system-x86_64 -cdrom sun.iso
+	@qemu-system-x86_64 -cdrom $(ISODIR)/out/Sun.iso

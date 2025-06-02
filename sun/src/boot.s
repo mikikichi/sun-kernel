@@ -1,8 +1,6 @@
 
 global _start
-extern gdt_pointer
 extern kernel_main
-extern vbe_set_mode
 %include "print.s"
 
 section     .text
@@ -77,10 +75,6 @@ dq 0x00AF9A000000FFFF                     ;kernel code
 
 dq 0x00CF92000000FFFF                  
 
-.gdt_pointer:
-   dw $ - gdt - 1               ;limit 16bit
-   dq gdt                             ;base 64bit
-
 
 
 section .bss
@@ -99,7 +93,6 @@ stack_top:
     align 16
 
 section .text
-lgdt [gdt_pointer]
 jmp gdt.kernel_code:long_mode_start
 
 

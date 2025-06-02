@@ -1,10 +1,4 @@
-#include <stddef.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include "../libs/print.h"
-#include "../libs/log.h"
-#include "../libs/serial.h"
-#include "exception.h"
+#include "exceptionhandler.h"
 
 void exception(int x) {
     switch(x) {
