@@ -1,0 +1,3 @@
+[submodule "sun/deps/freestand-c-hdrs"]
+	path = sun/deps/freestand-c-hdrs
+	url = https://codeberg.org/osdev/freestnd-c-hdrs.git
