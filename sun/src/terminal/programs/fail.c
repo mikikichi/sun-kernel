@@ -1,8 +1,3 @@
-#include <stdbool.h>
-#include "../../libs/print.h"
-#include "../../libs/log.h"
-#include "../../libs/keyboard.h"
-#include "../../libs/strings.h"
 #include "fail.h"
 
 void fail(void) {

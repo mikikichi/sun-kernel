@@ -1,13 +1,8 @@
-#include <stddef.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include "../libs/print.h"
-#include "../libs/log.h"
-#include "../libs/serial.h"
 #include "exception.h"
-#include "../terminal/programs/exit.h"
-#include "../libs/keyboard.h"
-#include "../libs/strings.h"
+
+#include "terminal/programs/exit.h"
+#include "libs/keyboard.h"
+#include "libs/strings.h"
 
 void exception1() {
     fatal("EXCEPTION: Division by zero.\n");

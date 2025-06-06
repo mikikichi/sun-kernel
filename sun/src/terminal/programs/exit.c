@@ -1,6 +1,7 @@
 #include <stdbool.h>
-#include "../../libs/print.h"
-#include "../../libs/log.h"
+#include "libs/print.h"
+#include "libs/log.h"
+#include "exit.h"
 
 void halt() {
     printf("The kernel will stop now.\n");

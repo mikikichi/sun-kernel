@@ -1,5 +1,6 @@
 #include <stdbool.h>
-#include "../../libs/print.h"
+#include "libs/print.h"
+#include "version.h"
 
 void version() {
     printf(" ____________________________\n");
