@@ -6,6 +6,7 @@ okay nerds here is the actual serious readme
 # Requirements
 * nasm
 * x86_64 cross compiler (gcc AND binutils, https://wiki.osdev.org/GCC_Cross-Compiler)
+* clang 12 or later
 * ld (part of binutils)
 * qemu (or any other virtualisation software)
 * xorriso
