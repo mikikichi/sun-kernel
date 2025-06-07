@@ -7,6 +7,7 @@ okay nerds here is the actual serious readme
 * nasm
 * x86_64 cross compiler (gcc AND binutils, https://wiki.osdev.org/GCC_Cross-Compiler)
 * ld (part of binutils)
+* clang 12 or later
 * qemu (or any other virtualisation software)
 * xorriso
 * grub-mkrescue (part of grub package)
