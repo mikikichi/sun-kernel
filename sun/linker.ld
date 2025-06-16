@@ -1,34 +1,50 @@
 ENTRY(_start)
 
 SECTIONS {
+    . = 1M;                                                          /* dot is a location counter without it its incremented by the size */
 
-    . = 1M;
-
-    .multiboot_header ALIGN(8) :
+    .multiboot_header ALIGN(8) :                                      /* multiboot said that it needs to be aligned to 8 bytes */
     {
-        KEEP(*(.multiboot_header))
+        KEEP(*(.multiboot_header))                           /* keep will instruct linker to keep specified section even if no symbols inside are referenced */
     }
 
-    .bss :
-    {
-        *(.bss)
+    . = ALIGN(CONSTANT(MAXPAGESIZE));                        
 
-        *(COMMON)
-       . = ALIGN(4096);
+    .text : {
+	_TEXT_START_ = .;
+        *(.text .text.*)   
+	_TEXT_END_ = .;                                    /* text is twice so we dont miss any*/
     }
 
-    .text :
-    {
-        *(.text)
+    . = ALIGN(CONSTANT(MAXPAGESIZE));                                         /* maxpagesize is gnu linker variable good and portable!!*/
+
+    .rodata : {
+	_RODATA_START_ = .;                                                          /* symbol for ease of life */
+        *(.rodata .rodata.*)
+	_RODATA_END_ = .;
     }
 
-    .data :
-    {
-        *(.data)
+    . = ALIGN(CONSTANT(MAXPAGESIZE));
+
+    .data : {
+	_DATA_START_ = .;
+        *(.data .data.*)
+	_DATA_END_ = .;
     }
 
-    .rodata :
-    {
-        *(.rodata)
+    . = ALIGN(CONSTANT(MAXPAGESIZE));
+
+    .bss : {
+	_BSS_START_ = .;
+        *(.bss .bss.*)											
+        *(COMMON) 													/* here for uninitialized data storing thats what a bss is lol */
+	_BSS_END_ = .; 
+    } 
+
+    . = ALIGN(CONSTANT(MAXPAGESIZE));
+
+    /DISCARD/ : {                                                         
+        *(.eh_frame*)
+        *(.note .note.*)
     }
 }
