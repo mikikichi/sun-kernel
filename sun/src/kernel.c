@@ -8,7 +8,6 @@
 #include "idt/idt.h"
 #include "terminal/programs/exit.h"
 #include "libs/serial.h"
-//#include "gdtheaders.h"
 
 extern unsigned int gdtinc;
 extern unsigned int pageinc;
@@ -37,7 +36,7 @@ void kernel_main() {
     pageinc = 1;
 
     if(pageinc == 1){
-        success("Paging has started - up to 1GB RAM addressable\n");
+        success("Paging has started - up to 2GB RAM addressable\n");
         serial_print("Paging load\n");
     } else {
         fatal("Paging failed to start.\n");

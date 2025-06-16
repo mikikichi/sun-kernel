@@ -1,0 +1,16 @@
+Instructions cheatsheet:
+LGDT | loads lgdt to enable gdt and goodies
+LLDT | load ldt gdt's local buddy ldt
+LTR | load a segment selector into cpus tr (task register) almighty selector in question points to TSS descriptor in gdt
+LIDT | load almighty idt!
+MOV | works with both debug registries and control registries
+LMSW | 
+CLTS 
+INVD 
+WBINVD
+INVLPG 
+HLT
+RDMSR 
+WRMSR 
+RDPMC 
+RDTSC 

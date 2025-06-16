@@ -1,8 +1,21 @@
 
 global _start
+extern paging
+extern set_PML4
+extern pml4
+extern pdpt
+extern set_PDPT
 extern kernel_main
 extern vbe_set_mode
 %include "print.s"
+
+
+section .bss
+tempstack:
+	resb 4096
+tempstacktop:
+	align 16
+
 
 section .data
 global pageinc
@@ -15,87 +28,68 @@ gdtinc:     db 0
 longinc:    db 0
 
 section     .text
-bits 32
-_start:
-    ; LEVEL 4 PAGE TABLE
-    mov eax, p3_table 
-    or eax , 0b11 
+bits 32                                                ;pt covers per entry 4kib (total coverage 2mib), pd covers per entry 2mib(total coverage possible 1gib)
+                                                       ; pdpt covers per entry 1gib (total possible 512gib), pml4 covers per entry 512gib (possible 256 tib)
+_start:                                                ; calculation of max is 512 times the entry size
+													;steps are put pml 4 into cr3 enable pae in cr4 put 0xC0000080 to rdmsr and friends enable paging with cr0
 
-    mov dword [p4_table + 0], eax
+	mov esp, tempstacktop                      ;without this no call!	
 
-    ; LEVEL 3 PAGE TABLE
-    mov eax, p2_table
-    or eax, 0b11
-    mov dword [p3_table + 0], eax
+	call set_PML4
+	call set_PDPT               ;is this going to zero???
+	;cr3 set, this is our guard who will let us enter paging
+	mov eax, pml4
+	mov cr3, eax
 
-    mov ecx, 0
+	;PAE friend enabled
+	mov eax, cr4            ;move cr4 to eax then turn the pae friend on and put it back where it belongs >-<
+	or eax, 0x20
+	mov cr4, eax
 
-    mov byte [pageinc], 1
+	mov ecx, 0xC0000080                 ;this is IA32_EFER extended feature enable register. longmode stuff
+	rdmsr                                ;ecx server the msr the value like a server then eax is lower 32 bits edx upper 32 bits msr is 64bit but 36 bits are used
+	or eax, 0x100                         ;set bit 8 IA32_EFER.LME which is R/W
+	wrmsr                                  ;finally we write the value from our friend rdmsr
 
-.map_p2_table:
-    mov eax, 0x200000 ; 2MiB
-    mul ecx 
-    or eax, 0b10000011 
-    mov [p2_table + ecx * 8], eax
+	;enabling cr0, star of the show! without this all linear addresses are treated as if they were there. linear means "all addresses that can be formed on the system"
+	;its related to segmentation thats why gdt and such mental illness of segmentation is still somewhat prevelant (lol linus)
+	;paging happens after segmentation translates logical addresses (what the programs think its there) to linear addresses
+	;huh so paging is a form of memory protection yeah thats what the wikis say, makes sense why pure segmentation is agony
+	;so our old crumpy segmentation is still needed... we love and hate you <3
+	mov eax, cr0
+	or eax, 0x80000000                   ;this is turning on bit 31 paging in cr0
+	or eax, 0x10000                       ;write protect, for safety on ring 0
+	mov cr0, eax
 
-    inc ecx 
-    cmp ecx, 512
-    jne .map_p2_table
+	mov byte [pageinc], 1
 
-    mov eax, p4_table
-    mov cr3, eax 
-
-    ;enable PAE
-    mov eax, cr4
-    or eax, 1 << 5
-    mov cr4, eax
-
-    mov ecx, 0xC0000080
-    rdmsr 
-    or eax, 1 << 8
-    wrmsr
-
-
-    ; ENABLE PAGING
-    mov eax, cr0
-    or eax, 1 << 31
-    or eax, 1 << 16
-    mov cr0, eax
+;to get the right page do (page directory index * 512) + page table index
 
 
 section .data
-gdt:
+gdt:                                                   ;this right here helps segmentation translate logical addresses to linear! wow thanks friend!
 	dq 0x0000000000000000                      ;null
 .kernel_code: equ $ - gdt
 
 	dq 0x00AF9A000000FFFF                     ;kernel code
 .kernel_data: equ $ - gdt                
 
-	dq 0x00CF92000000FFFF                  
+	dq 0x00CF92000000FFFF                         
 
 .gdt_pointer:
    dw $ - gdt - 1               ;limit 16bit
-   dq gdt                             ;base 64bit
+   dq gdt                             ;base 64bit base is here reference to below note
 
-
-
-section .bss
-align 4096 
-p4_table:
-    resb 4096 
-p3_table:
-    resb 4096
-p2_table:
-    resb 4096
-
+section .stack:
 .stack:
 stack_bottom:
-    resb 4096
+    resb 4096                                ;unitialized space declared in non bss? eh?
 stack_top:
-    align 16
+    align 16                                ;top marks the "end" since stack grows downwards.... alignment 16 is standard
 
 section .text
-lgdt [gdt.gdt_pointer]
+lgdt [gdt.gdt_pointer]                                         ;this could cause a gp if base addresss is non canonical canonical has to do with the extension
+                                                         ;from PAE so we have more stuff but more responsibility. huh where is canonality checked and made??
 jmp gdt.kernel_code:long_mode_start
 
 

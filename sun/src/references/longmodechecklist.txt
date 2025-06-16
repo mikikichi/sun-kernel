@@ -1,0 +1,10 @@
+
+How do I prepare my CPU to be mature enough to get into long mode?
+
+Here's my list of things you need: 
+(this list isn't really a guide but more of a reference some things might be wrong you can correct them ofc)
+
+~Paging setup:
+First start off with designing your paging. If you want big pages like 1GB or smaller pages. You need to pick the right table for your needs. 
+You don't need to have a clear design yet for now. Simply setting the bits PS (to stop the paging walk) read/write and present is doable for now!
+Messing with priveleges and protection bits is not needed for now since you probably don't have a userspace anyways.
