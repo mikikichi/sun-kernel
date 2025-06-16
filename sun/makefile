@@ -1,14 +1,10 @@
-CC := x86_64-elf-gcc       
-LD := x86_64-elf-gcc
+CC := x86_64-elf-gcc
 ASM := nasm
 INCLUDE := -I$(HOME)/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -I$(HOME)/sun-kernel/sun/src/libs -I$(HOME)/sun-kernel/sun/src/terminal -I$(HOME)/sun-kernel/sun/src/idt 
 INCLUDEASM := $(HOME)/sun-kernel/sun/src
 
-LINKSCRIPT := -T linker.ld
 ASMFLAGS := -f elf64
-CFLAGS := -ffreestanding -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone
-
-LINKERFLAGS := -ffreestanding -O2 -nostdlib
+CFLAGS := -ffreestanding -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -g
 WARNFLAGS := -Wall -Werror
 
 ROOT := $(HOME)/sun-kernel/sun
@@ -19,7 +15,7 @@ DEPS := $(HOME)/sun-kernel/sun/src/deps
 SRCFILES := $(shell find $(SRCDIRECTORIES) -type f -name '*.c')
 ASMFILES := $(shell find $(SRCDIRECTORIES) -type f -name "*.s")
 
-
+DP := $(HOME)/sun-kernel/sun/src/deps
 OBJFILESC := $(patsubst %.c, %.o, $(SRCFILES))
 OBJFILESA := $(patsubst %.s,%.o,$(ASMFILES))
 
@@ -37,8 +33,8 @@ all: clean $(OBJFILESC) $(OBJFILESA) link move iso run
 
 
 test:
-	@"Clearing .d files"
-	-@$(RM) $(wildcard $(SRCDIRECTORIES)/*.d)
+	@echo "Clearing .d files"
+	-@$(RM) $(wildcard $(DP)/*.d)
 
 
 
@@ -57,7 +53,7 @@ clean:
 
 link: $(OBJLIST)
 	@echo "Linking..."
-	@$(CC) $(LINKERFLAGS) $(LINKERSCRIPT) -o kernel.bin  $(OBJLIST) -lgcc
+	@x86_64-elf-ld -T linker.ld -o kernel.bin $(OBJLIST)
 
 move:
 	@echo "Moving to compiled"

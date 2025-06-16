@@ -8,7 +8,7 @@ bits 32
 section .bss                               ;uninitialized data i think? this isnt the same as a data section
 align 4096 
 pml4: resb 4096                           ;page table structures are always 4kb the "container" itself is
-pdpt: resb 4096                                  ;resb reserves us a sweet spot. 4096 is 4kb this is seen a lot                          ;no need for an array again this reserves the 512 entries!!
+pdpt: resb 4096                                  ;resb reserves us a sweet spot. 4096 is 4kb this is seen a lot
 
 
 section .text
@@ -21,7 +21,7 @@ set_PML4:                                                 ;maps 48bit virtual ad
 	or eax, 0x3                                     ;present, writable physical address of pml4 goes to cr3
 
 	mov dword [pml4 + 0], eax                         ;holds physical address of pdpt address is then stored in current levels entry this is to chain, again needs friends
-                                                      ;its like doing pml4[0] in C
+	ret
 ;page directory pointer table
 ;pdpt index bits 38-30													   
 set_PDPT:                                       ;pdpt must be located below 4gb memory because cr3 is 32bits even in pae 32bit can only hold 4gb minus 1 byte

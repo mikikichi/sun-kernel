@@ -38,7 +38,7 @@ _start:                                                ; calculation of max is 5
 	call set_PML4
 	call set_PDPT               ;is this going to zero???
 	;cr3 set, this is our guard who will let us enter paging
-	mov eax, pml4
+	lea eax, [pml4]
 	mov cr3, eax
 
 	;PAE friend enabled
@@ -56,7 +56,7 @@ _start:                                                ; calculation of max is 5
 	;paging happens after segmentation translates logical addresses (what the programs think its there) to linear addresses
 	;huh so paging is a form of memory protection yeah thats what the wikis say, makes sense why pure segmentation is agony
 	;so our old crumpy segmentation is still needed... we love and hate you <3
-	mov eax, cr0
+	mov eax, cr0                           ; 0x60000010 wrong value
 	or eax, 0x80000000                   ;this is turning on bit 31 paging in cr0
 	or eax, 0x10000                       ;write protect, for safety on ring 0
 	mov cr0, eax
@@ -74,7 +74,7 @@ gdt:                                                   ;this right here helps se
 	dq 0x00AF9A000000FFFF                     ;kernel code
 .kernel_data: equ $ - gdt                
 
-	dq 0x00CF92000000FFFF                         
+	dq 0x00CF92000000FFFF                         ;this points to invalid memory
 
 .gdt_pointer:
    dw $ - gdt - 1               ;limit 16bit
