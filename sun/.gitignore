@@ -1,4 +1,4 @@
 
 *.iso
-sun-kernel/sun/compiled/
-sun-kernel/sun/deps/
+sun-kernel/sun/compiled/*.o
+sun-kernel/sun/deps/*.d
