@@ -1,13 +1,14 @@
 #include <stdbool.h>
-#include "../libs/print.h"
-#include "../libs/log.h"
-#include "../libs/keyboard.h"
-#include "../libs/strings.h"
-#include "programs/exit.h"
-#include "programs/version.h"
-#include "programs/serialterm.h"
-#include "programs/fail.h"
-#include "../exception/exceptionhandler.h"
+#include "lib/print.h"
+#include "lib/log.h"
+#include "lib/keyboard.h"
+#include "lib/strings.h"
+#include "program/exit.h"
+#include "program/version.h"
+#include "program/serialterm.h"
+#include "program/fail.h"
+#include "exc/exceptionhandler.h"
+
 
 void terminal() {
     begin("Terminal began\n");
@@ -21,16 +22,19 @@ void terminal() {
     while(1) {
         char input[256];
         printf("shell> ");
-        read_line(input, 256);
+        read_line(input, 256);                //256??
         printf("\n");
 
-        // father forgive me for i have sinned, i have nested if statements
+
+		//switch (strcmp(input)) {
+			//case "hello"  commented out for now i need to figure out how this works lol
+		//}
 
         if(strcmp(input, "exit") == 0) {
-            halt();
+            	halt();
         } else if(strcmp(input, "hello") == 0) {
                 printf("Hello, World!\n");
-        } else if(strcmp(input, "version") == 0) {
+		} else if(strcmp(input, "version") == 0) {
                 version();
         } else if(strcmp(input, "clear") == 0) {
                 clear();
@@ -48,6 +52,10 @@ void terminal() {
             printf("'serial' - enter a basic serial tool.\n");
             printf("'fail' - crashes the system.\n");
             printf("'help' - shows this message.\n");
+			printf("'infostruct' - get GRUB's information structure.\n");
+			printf("'search' - search free physical pages.\n");
+			printf("'getframe' - allocate physical page frame.\n");                                  //placeholder, doesnt exist yet
+			printf("'freepage' - free physical page frame.\n");
         } else {
                 printf("Command not recognised. Type 'help' for a list of recognised commands.\n");
             }

@@ -1,9 +1,9 @@
 #include <stdbool.h>
-#include "../../libs/strings.h"
-#include "../../libs/print.h"
-#include "../../libs/serial.h"
-#include "../../libs/log.h"
-#include "../../libs/keyboard.h"
+#include "lib/strings.h"
+#include "lib/print.h"
+#include "lib/serial.h"
+#include "lib/log.h"
+#include "lib/keyboard.h"
 
 void write() {
     while (1) {

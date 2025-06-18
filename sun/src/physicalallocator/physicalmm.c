@@ -1,8 +1,8 @@
-#include "bitmap.h"
-#include "libs/log.h"
+#include "pmm/bitmap.h"
+#include "lib/log.h"
 #include <stdint.h>
 #include <limits.h>
-#include "libs/print.h"
+#include "lib/print.h"
 
 #define PAGE_SIZE 4096              //4kb
 
@@ -10,15 +10,15 @@
 
 page bitmap[BITMAP_SIZE];
 
-void status() {
+void search() {
 
 }
 
 
-void allocate() {
+void getframe() {
 
 }
 
-void free() {
+void freepage() {
 	
 }

@@ -1,9 +1,9 @@
 #include <stdbool.h>
-#include "../../libs/print.h"
-#include "../../libs/log.h"
-#include "../../libs/keyboard.h"
-#include "../../libs/strings.h"
-#include "fail.h"
+#include "lib/print.h"
+#include "lib/log.h"
+#include "lib/keyboard.h"
+#include "lib/strings.h"
+#include "program/fail.h"
 
 void fail(void) {
     clear();

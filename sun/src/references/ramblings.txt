@@ -1,0 +1,56 @@
+this is where i put my boot.s/temppaging.s notes so theres less clutter
+
+;pt covers per entry 4kib (total coverage 2mib), pd covers per entry 2mib(total coverage possible 1gib)
+; pdpt covers per entry 1gib (total possible 512gib), pml4 covers per entry 512gib (possible 256 tib)
+; calculation of max is 512 times the entry size
+;steps are put pml 4 into cr3 enable pae in cr4 put 0xC0000080 to rdmsr and friends enable paging with cr0
+;without this no call!	
+;this is IA32_EFER extended feature enable register. longmode stuff
+;ecx server the msr the value like a server then eax is lower 32 bits edx upper 32 bits msr is 64bit but 36 bits are used
+;set bit 8 IA32_EFER.LME which is R/W
+;finally we write the value from our friend rdmsr
+;enabling cr0, star of the show! without this all linear addresses are treated as if they were there. linear means "all addresses that can be formed on the system"
+;its related to segmentation thats why gdt and such mental illness of segmentation is still somewhat prevelant (lol linus)
+;paging happens after segmentation translates logical addresses (what the programs think its there) to linear addresses
+;huh so paging is a form of memory protection yeah thats what the wikis say, makes sense why pure segmentation is agony
+;so our old crumpy segmentation is still needed... we love and hate you <3
+;this is turning on bit 31 paging in cr0
+;write protect, for safety on ring 0
+;this right here helps segmentation translate logical addresses to linear! wow thanks friend!
+;uninitialized data i think? this isnt the same as a data section
+;page table structures are always 4kb the "container" itself is
+;resb reserves us a sweet spot. 4096 is 4kb this is seen a lot
+;level 4 page table
+;sign extension 16 bits not sure what this means???? WHAT DOES THAT AVL STUFF MEAN I DON'T GET IT! but its not rly relevant now?
+;pml4 index bits 47-39
+;maps 48bit virtual addresses to 52bit physical with pae
+;should be physical address of pdpt, this is like a chain i cant throw a pdpt or even pd alone they get lonely ;_;!
+;present, writable physical address of pml4 goes to cr3
+;holds physical address of pdpt address is then stored in current levels entry this is to chain, again needs friends
+;page directory pointer table
+;pdpt index bits 38-30	
+;pdpt must be located below 4gb memory because cr3 is 32bits even in pae 32bit can only hold 4gb minus 1 byte
+;offsets for gb: 0x00000000, 0x4000000 its plus 4
+;the entries are 64 even when lower bits 32 are used! remember lower to higher
+;this means present writable ps and all that stuff. no need for more complexity rn
+;lower and higher bits, only the lower bits are used so set flags there!!
+;this all becomes one entry! still first index
+;virtual is pdpt index times 1gb its index times pagesize in easy speech
+;YOU DON'T NEED TO GO THROUGH THESE IF YOU DON'T USE THEM FOR NOW! set ps bit!!
+;pd index bits 29-21
+.PD:
+
+	;mov eax, PT             
+	;or eax, 0x3
+
+	;mov dword [PT + 0], eax
+
+;page table, this tells MMU how to translate addresses, each index contains physical memory address to which each page should be mapped golden rule 48 to 52
+;pt index bits 20-12
+.PT:
+
+;this could be useful when we have finally an allocator for heap and friends. i think allocating a gig for small things is stupid
+;offset within 4kb page bits 11-0
+;bits 12-51 physical address set ps
+;more monster notes so the indexes are like the "marks" like you see an address, look at the bits mentioned to see if it came from which table
+

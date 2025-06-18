@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h>
-#include "io.h"
-#include "print.h"
+#include "lib/io.h"
+#include "lib/print.h"
 
 bool shift_pressed = false;
 

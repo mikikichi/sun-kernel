@@ -1,17 +1,20 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "libs/print.h"
-#include "libs/log.h"
-#include "libs/serial.h"
-#include "terminal/terminal.h"
+#include "lib/print.h"
+#include "lib/log.h"
+#include "lib/serial.h"
+#include "term/terminal.h"
 #include "idt/idt.h"
-#include "terminal/programs/exit.h"
-#include "libs/serial.h"
+#include "program/exit.h"
+#include "lib/serial.h"
+#include "mult/multibootinfo.h"
 
 extern unsigned int gdtinc;
 extern unsigned int pageinc;
 extern unsigned int idtinc;
+extern uint32_t multiboot2_magic;
+extern uint32_t multiboot2_ptr;                    //cast this to its own pointertype, iterate through what you need send it to the right file etc
 
 void kernel_main() {
     clear();
@@ -22,6 +25,9 @@ void kernel_main() {
 
     success("Running in long mode.\n");
 
+	uintptr_t *multibootptr = (uintptr_t *)(uintptr_t)multiboot2_ptr;                //type to cast to *pointer = (actual pointer of that type*)(type to cast to)whatever
+                                                                                     //;wanted_type newVar = (wanted_type) oldValue;
+	recieve((uintptr_t *)multibootptr, multiboot2_magic); //temporary will be changed!
 	gdtinc = 1;
 
     if(gdtinc == 1) {
@@ -29,14 +35,14 @@ void kernel_main() {
         serial_print("GDT load\n");
     } else {
         fatal("The GDT failed to load.\n");
-        serial_print("GDT fail\n");
+        serial_print("GDT fail\n");                                   //but this will never even happen? i think unnecesary code
         halt();
     }
 
     pageinc = 1;
 
     if(pageinc == 1){
-        success("Paging has started - up to 2GB RAM addressable\n");
+        success("Temporary paging has started - up to 2GB RAM addressable\n");
         serial_print("Paging load\n");
     } else {
         fatal("Paging failed to start.\n");

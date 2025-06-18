@@ -1,12 +1,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stddef.h>
-#include "../libs/log.h"
-#include "../terminal/programs/exit.h"
-#include "../libs/strings.h"
-#include "../libs/print.h"
-#include "../libs/serial.h"
-#include "../exception/exceptionhandler.h"
+#include "lib/log.h"
+#include "program/exit.h"
+#include "lib/strings.h"
+#include "lib/print.h"
+#include "lib/serial.h"
+#include "exc/exceptionhandler.h"
 
 __attribute__((noreturn))
 void exception_handler(uint8_t vector);

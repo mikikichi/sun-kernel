@@ -1,8 +1,8 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "io.h"
-#include "serial.h"
+#include "lib/io.h"
+#include "lib/serial.h"
 #define PORT 0x3f8
 
 int serial_init() {

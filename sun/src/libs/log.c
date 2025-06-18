@@ -1,6 +1,6 @@
-#include "log.h"
-#include "print.h"
-#include "strings.h"
+#include "lib/log.h"
+#include "lib/print.h"
+#include "lib/strings.h"
 
 void error(const char* message) {
     printcolour(vga_entry_colour(VGA_COLOUR_RED, VGA_COLOUR_BLACK));

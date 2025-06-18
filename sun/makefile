@@ -1,23 +1,24 @@
 CC := x86_64-elf-gcc
 ASM := nasm
-INCLUDE := -I$(HOME)/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -I$(HOME)/sun-kernel/sun/src/libs -I$(HOME)/sun-kernel/sun/src/terminal -I$(HOME)/sun-kernel/sun/src/idt 
-INCLUDEASM := $(HOME)/sun-kernel/sun/src
 
 ASMFLAGS := -f elf64
 CFLAGS := -ffreestanding -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -g
 WARNFLAGS := -Wall -Werror
 
-ROOT := $(HOME)/sun-kernel/sun
-SRCDIRECTORIES := $(ROOT)/src 
-COMPILED := $(HOME)/sun-kernel/sun/src/compiled
-DEPS := $(HOME)/sun-kernel/sun/src/deps
+ROOT := $(CURDIR)
+COMPILED := $(ROOT)/src/compiled
+DEPS := $(ROOT)/src/deps
+SOURCES := $(ROOT)/src
+HEADER := -I$(HOME)/opt/cross/lib/gcc/x86_64-elf/15.1.0/include -I$(ROOT)/src/headers
+INCLUDEASM := $(ROOT)/src
 
-SRCFILES := $(shell find $(SRCDIRECTORIES) -type f -name '*.c')
-ASMFILES := $(shell find $(SRCDIRECTORIES) -type f -name "*.s")
 
-DP := $(HOME)/sun-kernel/sun/src/deps
+SRCFILES := $(shell find $(SOURCES) -name '*.c')
+ASMFILES := $(shell find $(SOURCES) -name "*.s")
+
+DP := $(ROOT)/src/deps
 OBJFILESC := $(patsubst %.c, %.o, $(SRCFILES))
-OBJFILESA := $(patsubst %.s,%.o,$(ASMFILES))
+OBJFILESA := $(patsubst %.s, %.o, $(ASMFILES))
 
 
 DEPC := $(patsubst %.c,%.d,$(SRCFILES))
@@ -32,19 +33,15 @@ all: clean $(OBJFILESC) $(OBJFILESA) link move iso run
 .PHONY: clean move link isomove run test
 
 
-test:
-	@echo "Clearing .d files"
-	-@$(RM) $(wildcard $(DP)/*.d)
-
-
 
 clean:
 	@echo "Cleaning..."
 	-@$(RM) $(wildcard $(COMPILED)/*.o)
+	-@$(RM) $(wildcard $(DP)/*.d)
 
 
 %.o: %.c 
-	@$(CC) $(INCLUDE) $(CFLAGS) $(WARNFLAGS) -MMD -MP -c $< -o $@
+	@$(CC) $(HEADER) $(CFLAGS) $(WARNFLAGS) -MMD -MP -c $< -o $@
 
 %.o: %.s
 
