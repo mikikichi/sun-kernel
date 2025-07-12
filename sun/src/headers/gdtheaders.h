@@ -9,6 +9,6 @@
 
 void set_entries(void);
 extern struct gdtr gdtr;
-extern unsigned int gdtinc;
+extern unsigned int gdtinc; //should i get rid of this file??
 
 #endif

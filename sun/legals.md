@@ -5,7 +5,7 @@
 - **The Sun Kernel**
    - *License:* GNU GPL 3.0 (https://www.gnu.org/licenses/gpl-3.0.en.html)
    - *Source:* https://github.com/GBX9570/sun-kernel
-   - *Creators:* GBX9570, Ghatt-O, cavnbinpkg
+   - *Creators:* GBX9570, Ghatt-O, cavnbinpkg, mikikichi
    - *Summary:* The Source Code of the Sun Kernel.
 
 # Third Party Code

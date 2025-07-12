@@ -53,4 +53,13 @@ this is where i put my boot.s/temppaging.s notes so theres less clutter
 ;offset within 4kb page bits 11-0
 ;bits 12-51 physical address set ps
 ;more monster notes so the indexes are like the "marks" like you see an address, look at the bits mentioned to see if it came from which table
+	//mask trick only works with powers of two their binary form is a single 1 followed by zeroes
+	//lets say i want a non power of two like 9 so base + 8 / 9 then * 9 so lets sayyy base is 23
+	//following example 23 + 8 = 31 then 31 / 9 is 3 soo 3 * 9 is 27 its an int division so no float the result is with floats 3.444~ 
+	//computers like powers of 2 especially multiples of 8
 
+		//this now walks nicely in bytes to the next tag then cast it back
+	//so base + size 
+
+	//STORE THE ADDRESSES AS VALUES!!
+	//make like structs for different types of memory it will be the same layout but seperate your own structs to like mem reserved mem free etc

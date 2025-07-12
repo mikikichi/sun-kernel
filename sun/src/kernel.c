@@ -17,17 +17,18 @@ extern uint32_t multiboot2_magic;
 extern uint32_t multiboot2_ptr;                    //cast this to its own pointertype, iterate through what you need send it to the right file etc
 
 void kernel_main() {
+
     clear();
     serial_init();
     info("Kernel is UP!\n");
     success("Serial is UP!\n");
     serial_print("serial up\n");
 
+	//uintptr_t *multibootptr = (uintptr_t *)(uintptr_t)multiboot2_ptr;
+	//mb2_parse(multibootptr, multiboot2_magic); sadly my awesome parser needs to be commented out for now
+
     success("Running in long mode.\n");
 
-	uintptr_t *multibootptr = (uintptr_t *)(uintptr_t)multiboot2_ptr;                //type to cast to *pointer = (actual pointer of that type*)(type to cast to)whatever
-                                                                                     //;wanted_type newVar = (wanted_type) oldValue;
-	recieve((uintptr_t *)multibootptr, multiboot2_magic); //temporary will be changed!
 	gdtinc = 1;
 
     if(gdtinc == 1) {
@@ -38,7 +39,7 @@ void kernel_main() {
         serial_print("GDT fail\n");                                   //but this will never even happen? i think unnecesary code
         halt();
     }
-
+                             //what about some kind of checklist at the end?? well tbh this cant really ever fail but its better to have a failcheck
     pageinc = 1;
 
     if(pageinc == 1){

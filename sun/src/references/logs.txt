@@ -1,0 +1,22 @@
+
+what i have learned so far about how memory works:
+structs in C are a way to view memory well nothing in C really has any metadata so its all about seeing the memory any way you want.
+for example char will always be one byte and you can break down a 4 byte value into 4 chars. you can make your own structs to view laid out memory
+like i did with the multiboot parsing stuff its really good. rn i dont rly know how to do a deep copy but we probably dont need that for now??
+
+casting is useful but dangerous if done wrong so be careful!!! computers like powers of 2 especially 8 and thats what bytes are 8 bits and 32 and 64
+are all multiplies of 8. ive been wondering for a bit about why specifically that? im no math genius but i think it comes down to machines working with
+checking only 2 bits one or off and if the result is more than one carry on and so on. guess i gotta know more about how computers think?? binary isnt that scary
+anymore once you understand the hex values. 
+
+and with the structs well you will always need a struct instance and you cant write to a struct type itself its like tryna write to a uint8 or uint32 value 
+as if it existed. for calculating bytes cast it to a uint8 and do math normally its the easiest. depending on what you wanna count with you can cast it to different
+values. for when i make that memcpy some day lol i will try to make it optimal prolly copy byte by byte only... and whenever i make the dreaded physical malloc
+i think i learned a lot to be ready!!
+
+hmm that power of two thing really made me think and 8... whys it optimal for a byte to be 8 bits? one nibble is 4 so it would be 1111 does it have to do
+with carrying? its like the optimal way to carry the leftovers? brain not braining rn for full genius math stuff but im just guessin lol and hex is base 16..
+another multiplier of 8? so it all comes down to two huh? wonder where else in math this kinda pattern would show up...
+
+anyways back to the programming stuff wonder how i could rework some vga parts with my logic? they work but i wanna explore and test limits!! after i do both
+my allocators ill start on the multitasking part!

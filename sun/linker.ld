@@ -5,10 +5,15 @@ SECTIONS {
 
     .multiboot_header ALIGN(8) :                                      /* multiboot said that it needs to be aligned to 8 bytes */
     {
+		_multiboot_header_start = .;
         KEEP(*(.multiboot_header))                           /* keep will instruct linker to keep specified section even if no symbols inside are referenced */
+		_multiboot_header_end = .;
+
     }
 
     . = ALIGN(CONSTANT(MAXPAGESIZE));                        
+
+
 
     .text : {
 	_TEXT_START_ = .;
@@ -40,6 +45,15 @@ SECTIONS {
         *(COMMON) 													/* here for uninitialized data storing thats what a bss is lol */
 	_BSS_END_ = .; 
     } 
+
+
+    . = ALIGN(CONSTANT(MAXPAGESIZE));
+
+	_STACK_START = .;
+	.stack (NOLOAD) : {
+		. = . + 0x4000;           /*typical stack size here */
+	}
+	_STACK_END = .;
 
     . = ALIGN(CONSTANT(MAXPAGESIZE));
 
