@@ -1,22 +1,30 @@
 
 global _start
+
 ;paging externs
 extern set_PML4
 extern pml4
 extern set_PDPT
+
 ;kernel externs
 extern kernel_main
 extern vbe_set_mode
+
 ;gdt externs
 extern kernel_code
 extern kernel_data
 extern gdt_pointer
+
 ;linker externs
 extern _DATA_START_
 extern _DATA_END_
 extern _BSS_START_
 extern _BSS_END_
 extern _STACK_END
+
+;other
+extern bss_init
+extern data_init
 
 %include "print.s"
 
@@ -40,20 +48,13 @@ section     .text
 bits 32 
 
 _start:
-	;ok u need to initialize the data sections and such like for now push these to the stack and then to data sections nothing is given for free huh
-	;copy from rom to ram and such... maybe look into early boot stuff again???
+
 	;remember ebx has the pointer, eax has the magic number
 
-	;bss needs to be zeroed out
-	;data copied from rom to ram
 	mov esp, _STACK_END
-	push ebx
-	push eax
 
-
-
-
-
+	mov [multiboot2_ptr], eax
+	mov [multiboot2_magic], ebx
 
 	call set_PML4
 	call set_PDPT
@@ -93,7 +94,7 @@ section .text
 bits 64
 
 long_mode_start:
-    mov rsp, _STACK_END
+    mov rsp, _STACK_END ;just wondering what this really does does it push rsp to esps last entry? so is my ret address garbage
     mov ax, kernel_data
     mov ds, ax
     mov es, ax
@@ -102,6 +103,7 @@ long_mode_start:
     mov ss, ax                  
 	;eventually here push the multiboot stuff back to stack so it grabs them remember its like 2 1 here 2nd parameter first
 	;ebp is the stacks frame in the specific function or thing argument is + local vars are - first ebp is ret address
+	;wonder if i really NEED to make the multiboot stuff on the stack? cuz i can store it in variable like i did but i messed it up??
     mov byte [gdtinc], 1
     mov byte [longinc], 1
     call kernel_main

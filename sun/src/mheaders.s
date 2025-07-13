@@ -34,10 +34,10 @@ addr_tag_start:
 	dw 2 ;addr 
 	dw 0 
 	dd addr_tag_end - addr_tag_start
-	dd _multiboot_header_start
-	dd _TEXT_START_
-	dd _DATA_END_
-	dd _BSS_END_
+	dd _multiboot_header_start ;beginning address of header, where magic number is loaded
+	dd _TEXT_START_ ;phys address of text beginning offsets in os at which to start loading is headers start minus this
+	dd _DATA_END_ ;data sections phys end address (load_end_addr - load_addr) how much data to load
+	dd _BSS_END_ ;put stack here so its zeroed nicely
 
 
 addr_tag_end:

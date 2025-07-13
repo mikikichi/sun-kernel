@@ -42,18 +42,23 @@ SECTIONS {
     .bss : {
 	_BSS_START_ = .;
         *(.bss .bss.*)											
-        *(COMMON) 													/* here for uninitialized data storing thats what a bss is lol */
+        *(COMMON)
+
+	. = ALIGN(0x10);
+
+	_STACK_START = .; /*stack needs to be aligned to 16 cuz address of stack pointer needs to be multiple of 16 0x10 is 16 in hex*/
+		. = . + 0x4000;           /*typical stack size here 16kb for starters*/
+	_STACK_END = .;
+
+
+
+
 	_BSS_END_ = .; 
     } 
 
 
     . = ALIGN(CONSTANT(MAXPAGESIZE));
 
-	_STACK_START = .;
-	.stack (NOLOAD) : {
-		. = . + 0x4000;           /*typical stack size here */
-	}
-	_STACK_END = .;
 
     . = ALIGN(CONSTANT(MAXPAGESIZE));
 

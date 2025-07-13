@@ -24,8 +24,8 @@ void kernel_main() {
     success("Serial is UP!\n");
     serial_print("serial up\n");
 
-	//uintptr_t *multibootptr = (uintptr_t *)(uintptr_t)multiboot2_ptr;
-	//mb2_parse(multibootptr, multiboot2_magic); sadly my awesome parser needs to be commented out for now
+	uintptr_t *multibootptr = (uintptr_t *)(uintptr_t)multiboot2_ptr;
+	mb2_parse(multibootptr, multiboot2_magic); //doesnt work just included anyways 
 
     success("Running in long mode.\n");
 

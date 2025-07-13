@@ -15,18 +15,17 @@
 
 
 void mb2_parse(uintptr_t *multibootptr, uint32_t multiboot2_magic) {
-	success("parser started\n");
+
 
 	if (multiboot2_magic != MULTIBOOT2_BOOTLOADER_MAGIC) {
-		return;
+		return; //this rets instantly i know it doesnt work </3 :((!!
 	}
-	success("before calculation\n");
+
 	tag *m_tag = (tag *)((uint8_t *)multibootptr + 8);     //this is 8 bytes past the entry size etc now i got the real entries
-	success("after calculation\n");
+
 	while (m_tag->type != MULTIBOOT_TAG_TYPE_END) {
 		switch (m_tag->type) {
 			case MULTIBOOT_TAG_TYPE_MMAP:
-			success("entry found\n");
 			m2_mmap(m_tag);
 			break;
 
