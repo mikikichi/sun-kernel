@@ -37,9 +37,10 @@ global gdtinc
 global longinc
 global multiboot2_ptr
 global multiboot2_magic
+global _start
 
 pageinc:    db 0
-gdtinc:     db 0
+gdtinc:		db 0
 longinc:    db 0
 multiboot2_ptr: dd 0
 multiboot2_magic: dd 0
@@ -50,11 +51,12 @@ bits 32
 _start:
 
 	;remember ebx has the pointer, eax has the magic number
-
+	;maybe use objdump to seee??
+	;progbits is section type it means section has actual bytes its the virt address
 	mov esp, _STACK_END
+	mov [multiboot2_ptr], ebx ;how does this have the value of entry??
+	mov [multiboot2_magic], eax
 
-	mov [multiboot2_ptr], eax
-	mov [multiboot2_magic], ebx
 
 	call set_PML4
 	call set_PDPT

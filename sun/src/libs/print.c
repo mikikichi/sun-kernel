@@ -3,9 +3,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "lib/print.h"
-
+//this will all be removed in the VGA/EGA remake this is just copied osdev code and I HATE IT!!!! </3!!!
 const size_t VGA_WIDTH = 80;
-const size_t VGA_HEIGHT = 25;
+const size_t VGA_HEIGHT = 25; //mode 3h, 80x25
 
 size_t terminal_row;
 size_t terminal_column;
@@ -33,7 +33,7 @@ void clear(void) {
     terminal_colour = vga_entry_colour(VGA_COLOUR_WHITE, VGA_COLOUR_BLACK);
     terminal_buffer = (uint16_t*) 0xB8000;
     for (size_t y = 0; y < VGA_HEIGHT; y++) {
-        for (size_t x = 0; x < VGA_WIDTH; x++) {
+        for (size_t x = 0; x < VGA_WIDTH; x++) { //8 bit chunky/packed format, not bit-plane
             const size_t index = y * VGA_WIDTH + x;
             terminal_buffer[index] = vga_entry(' ', terminal_colour);
         }
@@ -45,7 +45,7 @@ void printcolour(uint8_t colour) {
 }
 
 void terminal_putentryat(char c, uint8_t colour, size_t x, size_t y) {
-    const size_t index = y * VGA_WIDTH + x;
+    const size_t index = y * VGA_WIDTH + x; //pixel, number row
     terminal_buffer[index] = vga_entry(c, colour);
 }
 

@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-void outb(uint16_t port, uint8_t val);
-uint8_t inb(uint16_t port);
-void io_wait(void);
+void io_outb_8(uint16_t port, uint8_t data);
+uint8_t io_inb_8(uint16_t port);
+
 #endif

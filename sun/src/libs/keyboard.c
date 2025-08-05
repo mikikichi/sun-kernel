@@ -76,9 +76,9 @@ char ScanCodeToASCII(uint8_t scan_code, bool shift) {
 
 char sys_read()
 {
-    while (!(inb(0x64) & 0x01));
+    while (!(io_inb_8(0x64) & 0x01));
 
-    uint8_t scan_code = inb(0x60);
+    uint8_t scan_code = io_inb_8(0x60);
     
     if (scan_code == 0x2A || scan_code == 0x36) { 
         shift_pressed = true;
@@ -106,7 +106,7 @@ void print_input(const char* str) {
 }
 
 #define MAX_INPUT 256
-
+//writing
 void read_line(char* buffer, int max_len) {
     int index = 0;
 
@@ -116,7 +116,7 @@ void read_line(char* buffer, int max_len) {
         if (c == 0)
             continue;
 
-        if (c == '\n') {
+        if (c == '\n') {        //enter
             buffer[index] = '\0';
             return;
         }

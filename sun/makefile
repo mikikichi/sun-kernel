@@ -2,7 +2,7 @@ CC := x86_64-elf-gcc
 ASM := nasm
 
 ASMFLAGS := -f elf64
-CFLAGS := -ffreestanding -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -g
+CFLAGS := -ffreestanding -m64 -nostdlib -nostdinc -fno-pie -fno-pic -fno-stack-protector -mno-red-zone -g -O0
 WARNFLAGS := -Wall -Werror
 
 ROOT := $(CURDIR)

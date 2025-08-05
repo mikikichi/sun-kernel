@@ -2,21 +2,18 @@
 #include <stdint.h>
 #include "lib/io.h"
 
-inline void outb(uint16_t port, uint8_t val) {
-    __asm__ volatile ( "outb %b0, %w1" : : "a"(val), "Nd"(port) : "memory");
+extern uint8_t inb(uint16_t port);
+extern void outb(uint16_t port, uint8_t data);
+
+void io_outb_8(uint16_t port, uint8_t data) {
+	outb(port, data);
+	return;
+
 }
 
-inline uint8_t inb(uint16_t port)
-{
-    uint8_t ret;
-    __asm__ volatile ( "inb %w1, %b0"
-                   : "=a"(ret)
-                   : "Nd"(port)
-                   : "memory");
-    return ret;
-}
+uint8_t io_inb_8(uint16_t port) {
 
-inline void io_wait(void)
-{
-    outb(0x80, 0);
+	uint8_t written = inb(port);
+	return written;
+
 }

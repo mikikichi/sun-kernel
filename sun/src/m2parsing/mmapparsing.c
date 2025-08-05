@@ -1,4 +1,5 @@
-
+#include "mult/ranges.h"
+#include "mult/memoryinfo.h"
 #include "mult/multibootinfo.h"
 #include "lib/print.h"
 #include <stdint.h>
@@ -9,27 +10,27 @@
 #include "program/exit.h"
 #include "lib/serial.h"
 
-void m2_mmap(tag* tag) {
+mm_range ranges;
+mm_count counts;
+usableram usable[250];
+reservedmem reserved[64];
+acpi acpi_reclaim[64];
+nvs nvs_memory[64];
+defectmem bad_mem[64];
 
-	mm_range ranges;
-	mm_count counts;
 
-	mm_range *range = &ranges; 
 
-	mm_count *count = &counts;
-	usableram usable[64];
-	reservedmem reserved[64];
-	acpi acpi_reclaim[64];
-	nvs nvs_memory[64];
-	defectmem bad_mem[64];
+void m2_mmap(basic_tag *tag) {
+	//ok I REALLY KINDA sorta hate this lmaoo it looks kinda ugly ughh...
 
-	count->av_count = 0;     
-	count->re_count = 0;
-	count->ac_count = 0;
-	count->nv_count = 0;
-	count->bad_count = 0;
-	range->av_base = 0x0;
-	range->av_end = 0x0;
+
+	counts.av_count = 0;     
+	counts.re_count = 0;
+	counts.ac_count = 0;
+	counts.nv_count = 0;
+	counts.bad_count = 0;
+	ranges.av_base = 0x0;
+	ranges.av_end = 0x0;
 
 
 	memoryentries *mmapentry; //here so its the same type
@@ -40,75 +41,76 @@ void m2_mmap(tag* tag) {
 		switch (mmapentry->type){
 			case MULTIBOOT_MEMORY_AVAILABLE:
 			//its the goodies here that matter not rly the address of mmapentry or something it usually gets written easily
-			usableram *ram = usable + count->av_count;
+			//eventually here make a check so avaible ram doesnt include kernel
+			usableram *ram = usable + counts.av_count;
 			ram->addr = mmapentry->addr;
 			ram->len = mmapentry->len;
 			ram->type = mmapentry->type;
 			ram->zero = mmapentry->zero;
 
-			range->av_base = (count->av_count == 0) ? ram->addr : range->av_base;
+			ranges.av_base = (counts.av_count == 0) ? ram->addr : ranges.av_base;
 			
-			range->av_end = ram->addr + ram->len;
+			ranges.av_end = ram->addr + ram->len;
 
-			count->av_count++;
+			counts.av_count++;
 			break;
 
 			case MULTIBOOT_MEMORY_RESERVED:
 
-			reservedmem *res = reserved + count->re_count;
+			reservedmem *res = reserved + counts.re_count;
 			res->addr = mmapentry->addr;
 			res->len = mmapentry->len;
 			res->type = mmapentry->type;
 			res->zero = mmapentry->zero;
-			range->re_base = (count->re_count == 0) ? res->addr : range->re_base;
+			ranges.re_base = (counts.re_count == 0) ? res->addr : ranges.re_base;
 			
-			range->re_end = res->addr + res->len;
+			ranges.re_end = res->addr + res->len;
 
-			count->re_count++;
+			counts.re_count++;
 			break;
 
 			case MULTIBOOT_MEMORY_ACPI_RECLAIMABLE:
-			acpi *ac = acpi_reclaim + count->ac_count;
+			acpi *ac = acpi_reclaim + counts.ac_count;
 			ac->addr = mmapentry->addr;
 			ac->len = mmapentry->len;
 			ac->type = mmapentry->type;
 			ac->zero = mmapentry->zero;
-			range->ac_base = (count->ac_count == 0) ? ac->addr : range->av_base;
+			ranges.ac_base = (counts.ac_count == 0) ? ac->addr : ranges.av_base;
 			
-			range->ac_end = ac->addr + ac->len;
+			ranges.ac_end = ac->addr + ac->len;
 
-			count->ac_count++;
+			counts.ac_count++;
 			break;
 			case MULTIBOOT_MEMORY_NVS:
 
-			nvs *nv = nvs_memory + count->nv_count;
+			nvs *nv = nvs_memory + counts.nv_count;
 			nv->addr = mmapentry->addr;
 			nv->len = mmapentry->len;
 			nv->type = mmapentry->type;
 			nv->zero = mmapentry->zero;
-			range->nv_base = (count->nv_count == 0) ? nv->addr : range->nv_base;
+			ranges.nv_base = (counts.nv_count == 0) ? nv->addr : ranges.nv_base;
 			
-			range->nv_end = nv->addr + nv->len;
+			ranges.nv_end = nv->addr + nv->len;
 
-			count->nv_count++;
+			counts.nv_count++;
 			break;
 			case MULTIBOOT_MEMORY_BADRAM:
 
-			defectmem *bad = bad_mem + count->bad_count;
+			defectmem *bad = bad_mem + counts.bad_count;
 			bad->addr = mmapentry->addr;
 			bad->len = mmapentry->len;
 			bad->type = mmapentry->type;
 			bad->zero = mmapentry->zero;
-			range->bad_base = (count->bad_count == 0) ? bad->addr : range->bad_base;
+			ranges.bad_base = (counts.bad_count == 0) ? bad->addr : ranges.bad_base;
 			
-			range->bad_end = bad->addr + bad->len;
+			ranges.bad_end = bad->addr + bad->len;
 
-			count->bad_count++;
+			counts.bad_count++;
 			break;
 		}
 
 	}
 
-	clear();
+
 	return;
 } 

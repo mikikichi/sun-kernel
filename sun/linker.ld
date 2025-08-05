@@ -2,20 +2,14 @@ ENTRY(_start)
 
 SECTIONS {
     . = 1M;                                                          /* dot is a location counter without it its incremented by the size */
-
+	_kernel_start = .;
     .multiboot_header ALIGN(8) :                                      /* multiboot said that it needs to be aligned to 8 bytes */
     {
-		_multiboot_header_start = .;
         KEEP(*(.multiboot_header))                           /* keep will instruct linker to keep specified section even if no symbols inside are referenced */
-		_multiboot_header_end = .;
-
     }
 
-    . = ALIGN(CONSTANT(MAXPAGESIZE));                        
 
-
-
-    .text : {
+    .text :  {
 	_TEXT_START_ = .;
         *(.text .text.*)   
 	_TEXT_END_ = .;                                    /* text is twice so we dont miss any*/
@@ -55,12 +49,11 @@ SECTIONS {
 
 	_BSS_END_ = .; 
     } 
-
-
-    . = ALIGN(CONSTANT(MAXPAGESIZE));
-
+	_kernel_end = .;
 
     . = ALIGN(CONSTANT(MAXPAGESIZE));
+
+
 
     /DISCARD/ : {                                                         
         *(.eh_frame*)

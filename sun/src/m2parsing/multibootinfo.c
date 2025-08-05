@@ -9,56 +9,43 @@
 #include "idt/idt.h"
 #include "program/exit.h"
 #include "lib/serial.h"
+#include "mult/boottimeinfo.h"
 
 
 //plans to maybe store the pointers to parsed info in like a custom struct? could be pretty damn useful!!
+boot_info bootlog;
 
+void mb2_parse(uint32_t *m2ptr, uint32_t multiboot2_magic, uint64_t _kernel_start, uint64_t _kernel_end) {
 
-void mb2_parse(uintptr_t *multibootptr, uint32_t multiboot2_magic) {
+	bootlog.kernel_end = _kernel_end;
+	bootlog.kernel_start = _kernel_start;
 
 
 	if (multiboot2_magic != MULTIBOOT2_BOOTLOADER_MAGIC) {
-		return; //this rets instantly i know it doesnt work </3 :((!!
+		return; 
 	}
 
-	tag *m_tag = (tag *)((uint8_t *)multibootptr + 8);     //this is 8 bytes past the entry size etc now i got the real entries
+	basic_tag *m_tag = (basic_tag *)((uint8_t *)m2ptr + 8);     //this is 8 bytes past the entry size etc now i got the real entries
 
 	while (m_tag->type != MULTIBOOT_TAG_TYPE_END) {
 		switch (m_tag->type) {
 			case MULTIBOOT_TAG_TYPE_MMAP:
+
 			m2_mmap(m_tag);
-			break;
-
-			case MULTIBOOT_TAG_TYPE_BASIC_MEMINFO:
 
 			break;
-
-			case MULTIBOOT_TAG_TYPE_BOOTDEV:
-
-			break;
-
-			case MULTIBOOT_TAG_TYPE_VBE:
-
-			break;
-
-			case MULTIBOOT_TAG_TYPE_FRAMEBUFFER:
-
-			break; 
-
-			case MULTIBOOT_TAG_TYPE_LOAD_BASE_ADDR:
-
-			break; 
 
 			default:
 
 			break;
+
+
 		}
 
-
- 		m_tag = (tag *)(uint8_t *) m_tag + ((m_tag->size + 7) & ~7);
+		m_tag = (basic_tag *)((uint8_t *) m_tag + ((m_tag->size + 7) & ~7));
 	}
 
-	clear();
+
 	return;
 }
 

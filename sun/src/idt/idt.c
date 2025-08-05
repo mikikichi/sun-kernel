@@ -3,8 +3,10 @@
 #include <stddef.h>
 #include "idt/idt.h"
 #include "lib/io.h"
+#include "lib/log.h"
+#include "lib/serial.h"
 
-unsigned char idtinc;
+
 
 
 __attribute__((aligned(0x10))) 
@@ -44,10 +46,12 @@ void idt_init() {
         vectors[vector] = true;
     }
 
-    idtinc = 1;
+
 
     __asm__ volatile ("lidt %0" : : "m"(idtr));
-    outb(0x21, 0xFF);
-    outb(0xA1, 0xFF);
+    io_outb_8(0x21, 0xFF);
+    io_outb_8(0xA1, 0xFF); //mask master irq 0-7 and slave irq 8-15 legacy PIC
     __asm__ volatile ("sti");
+	success("IDT has started\n");
+    serial_print("IDT load\n");
 }

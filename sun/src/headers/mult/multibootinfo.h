@@ -74,11 +74,11 @@
 #define MULTIBOOT_CONSOLE_FLAGS_EGA_TEXT_SUPPORTED 2
 //monster of a list, macros for going through stuff below is some structs (not all) for multiboot stuff
 
-typedef struct tag {
+typedef struct basic_tag {
 	uint32_t type;                         //this is like a reference for parsing through the info
 	uint32_t size;
 
-}__attribute__((packed)) tag;
+}__attribute__((packed)) basic_tag;
 
 typedef struct memoryentries {
 	uint64_t addr;
@@ -88,46 +88,6 @@ typedef struct memoryentries {
 
 } __attribute__ ((packed)) memoryentries;
 
-typedef struct usableram {
-	uint64_t addr;
-	uint64_t len;
-	uint32_t type;
-	uint32_t zero;
-
-} __attribute__ ((packed)) usableram;
-//My custom structs for different memory information to keep track of!!
-typedef struct acpi {
-	uint64_t addr;
-	uint64_t len;
-	uint32_t type;
-	uint32_t zero;
-
-} __attribute__ ((packed)) acpi;
-
-typedef struct reservedmem {
-	uint64_t addr;
-	uint64_t len;
-	uint32_t type;
-	uint32_t zero;
-
-} __attribute__ ((packed)) reservedmem;
-
-typedef struct nvs {
-	uint64_t addr;
-	uint64_t len;
-	uint32_t type;
-	uint32_t zero;
-
-} __attribute__ ((packed)) nvs;
-
-
-typedef struct defectmem {
-	uint64_t addr;
-	uint64_t len;
-	uint32_t type;
-	uint32_t zero;
-
-} __attribute__ ((packed)) defectmem;
 
 typedef struct memorymap {
 	uint32_t type;
@@ -143,43 +103,28 @@ typedef struct multibootinfo {
 } __attribute__ ((packed)) multibootinfo;   //physical address of the struct is used to get entries
 //not used 
 
-typedef struct mm_range {
-	uint64_t av_base;
-	uint64_t av_end;
-	uint64_t re_base;
-	uint64_t re_end;
-	uint64_t ac_base;
-	uint64_t ac_end;
-	uint64_t nv_base;
-	uint64_t nv_end;
-	uint64_t bad_base;
-	uint64_t bad_end;
-} __attribute__ ((packed)) mm_range;
-
-typedef struct mm_count {
-	int av_count;         
-	int re_count;
-	int ac_count;
-	int nv_count;
-	int bad_count;
-} __attribute__ ((packed)) mm_count;
+typedef struct multiboot_basic_mem_info {
+	uint32_t type;
+	uint32_t size;
+	uint32_t mem_low;
+	uint32_t mem_high;
+}__attribute__ ((packed)) multiboot_basic_mem_info;
 
 
 
 
+typedef struct basic_mem_info {
+	uint32_t type;
+	uint32_t size;
+	uint32_t mem_low;
+	uint32_t mem_high;
+}__attribute__ ((packed)) basic_mem_info;
 
-extern mm_range ranges;
-extern mm_count counts;
-extern mm_count *count;
-extern mm_range *range;
-extern usableram usable[64];
-extern reservedmem reserved[64];
-extern acpi acpi_reclaim[64];
-extern nvs nvs_memory[64];
-extern defectmem bad_mem[64];
 
-void mb2_parse(uintptr_t *multibootptr, uint32_t multiboot2_magic);
-void m2_mmap(tag *tag);
+
+
+void mb2_parse(uint32_t *multibootptr, uint32_t multiboot2_magic, uint64_t _kernel_start, uint64_t _kernel_end);
+void m2_mmap(basic_tag *tag);
 
 //great bunch of useless structs here that arent used at all? should prolly clean them up later
 

@@ -20,3 +20,15 @@ another multiplier of 8? so it all comes down to two huh? wonder where else in m
 
 anyways back to the programming stuff wonder how i could rework some vga parts with my logic? they work but i wanna explore and test limits!! after i do both
 my allocators ill start on the multitasking part!
+
+yup i prolly need to practice assembly... havent been doin it much so i dont remember a whole bunch
+ii think i remember that if u push ebp and mov esp to be it then esb + 4 is the ret address but not if u dont do it before? maaaan i need to practice
+
+hmm so a buddy allocation system is basically how many times a block (page) gets split into two splits bump the order down 1 and merges up by 1
+merges happen when u free a block and its buddy is also free they become one each block gets multiplied by 2^n n being the current page or block
+order n splits into two order n-1 blocks each half the size
+
+heap after kernel's end cuz its runtime
+
+VGA/EGA full support, and some kind of api. Probably not worth it but whatever I wanna study and write about vga and hdmi differences... I wanna like...
+make every possible scenario somehow work??

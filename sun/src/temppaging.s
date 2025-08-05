@@ -23,7 +23,7 @@ set_PML4:
 ;pdpt index bits 38-30													   
 set_PDPT: 
 
-
+	;ngl i think this could have been written in C
 	mov eax, 0x00000000 
 	or eax, 0x83 
 	mov ecx, 0x0
