@@ -1,5 +1,5 @@
 
-**☀️Sun Kernel☀️ ⭐__x86-64__⭐**                            
+**☀️Sun Kernel☀️ ⭐x86-64⭐**                            
 ==================================================
 
 ## 📜Questions💬
@@ -20,9 +20,9 @@ A. UEFI port will be made when most BIOS features are supported.
 
 
 ## 🔔Plans🔎
-* PS/2 and serial keyboard.\
-* Page frame buddy allocator.\
-* Userspace.\
+* PS/2 and serial keyboard.
+* Page frame buddy allocator.
+* Userspace.
 
 
 ## 👨‍💻Design👩‍💻
