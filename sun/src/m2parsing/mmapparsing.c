@@ -1,14 +1,8 @@
 #include "mult/ranges.h"
 #include "mult/memoryinfo.h"
 #include "mult/multibootinfo.h"
-#include "lib/print.h"
 #include <stdint.h>
-#include "lib/log.h"
-#include "lib/serial.h"
-#include "term/terminal.h"
-#include "idt/idt.h"
-#include "program/exit.h"
-#include "lib/serial.h"
+
 
 mm_range ranges;
 mm_count counts;

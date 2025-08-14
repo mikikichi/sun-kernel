@@ -3,9 +3,6 @@
 #include <stddef.h>
 #include "idt/idt.h"
 #include "lib/io.h"
-#include "lib/log.h"
-#include "lib/serial.h"
-
 
 
 
@@ -52,6 +49,5 @@ void idt_init() {
     io_outb_8(0x21, 0xFF);
     io_outb_8(0xA1, 0xFF); //mask master irq 0-7 and slave irq 8-15 legacy PIC
     __asm__ volatile ("sti");
-	success("IDT has started\n");
-    serial_print("IDT load\n");
+
 }

@@ -22,11 +22,7 @@ extern _BSS_START_
 extern _BSS_END_
 extern _STACK_END
 
-;other
-extern bss_init
-extern data_init
 
-%include "print.s"
 
 
 
@@ -81,7 +77,6 @@ _start:
 	or eax, 0x10000 
 	mov cr0, eax
 
-	mov byte [pageinc], 1
 
 ;to get the right page do (page directory index * 512) + page table index
 
@@ -90,7 +85,7 @@ section .text
 lgdt [gdt_pointer]                                         ;this could cause a gp if base addresss is non canonical canonical has to do with the extension
 
 jmp kernel_code:long_mode_start
-
+;MAKE A TEMPORARY IDT FOR THIS PAGING!!!!
 
 section .text
 bits 64
@@ -106,7 +101,6 @@ long_mode_start:
 	;eventually here push the multiboot stuff back to stack so it grabs them remember its like 2 1 here 2nd parameter first
 	;ebp is the stacks frame in the specific function or thing argument is + local vars are - first ebp is ret address
 	;wonder if i really NEED to make the multiboot stuff on the stack? cuz i can store it in variable like i did but i messed it up??
-    mov byte [gdtinc], 1
-    mov byte [longinc], 1
+
     call kernel_main
 	hlt

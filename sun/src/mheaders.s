@@ -55,24 +55,9 @@ entry_tag_start:
 
 entry_tag_end:
 
-;align 8
-;flags_tag_start: commented out for now
-	;dw 4 ;flags
-	;dw 0
-	;dd flags_tag_end - flags_tag_start
-	;dd 0
 
-;flags_tag_end:
 
-;align 8
-;framebuf_tag_start: here for when vesa is ready 
-	;dw 5 ;framebuffer
-	;dw 0
-	;dd framebuf_tag_end - flags_tag_start
-	;dd 800 ;width
-	;dd 600 ;height
-	;dd 32 ;depth
-;framebuf_tag_end:
+
 
 align 8
 end_tag_start:

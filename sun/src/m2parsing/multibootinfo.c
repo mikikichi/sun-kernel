@@ -1,14 +1,8 @@
 
 #include "mult/multibootinfo.h"
-#include "lib/print.h"
 #include <stdint.h>
-#include "lib/print.h"
-#include "lib/log.h"
-#include "lib/serial.h"
-#include "term/terminal.h"
 #include "idt/idt.h"
 #include "program/exit.h"
-#include "lib/serial.h"
 #include "mult/boottimeinfo.h"
 
 

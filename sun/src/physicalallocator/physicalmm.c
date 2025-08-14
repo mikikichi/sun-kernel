@@ -1,10 +1,8 @@
 #include "pmm/pages.h"
-
-#include "lib/log.h"
 #include "lib/bool.h"
 #include <stdint.h>
 #include <limits.h>
-#include "lib/print.h"
+
 
 
 //grab all usable ram thats not kernel or modules

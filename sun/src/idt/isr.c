@@ -1,18 +1,15 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stddef.h>
-#include "lib/log.h"
 #include "program/exit.h"
 #include "lib/strings.h"
-#include "lib/print.h"
-#include "lib/serial.h"
+
 #include "exc/exceptionhandler.h"
 
 __attribute__((noreturn))
 void exception_handler(uint8_t vector);
 void exception_handler(uint8_t vector) {
 
-    fatal("Exception Occurred!");
     switch(vector) {
         case 1:
             exception(1);
@@ -108,7 +105,6 @@ void exception_handler(uint8_t vector) {
             exception(31);
             break;
         default:
-            error("Unknown exception vector.");
             break;
     }
 

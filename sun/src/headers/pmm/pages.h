@@ -1,7 +1,7 @@
 #ifndef PAGES_H
 #define PAGES_H
 
-#include "lib/log.h"
+
 #include <stdint.h>
 #include "lib/bool.h"
 

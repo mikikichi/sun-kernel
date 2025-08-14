@@ -1,9 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "lib/print.h"
-#include "lib/log.h"
-#include "lib/serial.h"
 #include "exc/exception.h"
 
 void exception(int x) {
@@ -102,7 +99,6 @@ void exception(int x) {
             exception31();
             break;
         default:
-            error("Exception does not exist.");
             break;
     }
 }
