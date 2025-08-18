@@ -10,16 +10,24 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include "lib/strings.h"
+
+
+
+
 
 void text_mono_init(void);
 void mono_cursor(uint16_t position);
-void mono_print(uint16_t position, char c);
-void print_string(uint16_t position, const char *string);
+void buffer_write(uint16_t position, char c);
+void buffer_string(uint16_t position, const char *string, uint16_t size);
 void clear(uint16_t position);
+void print(char *string);
 //16 for now
+//TO DO clean this shit up
 extern uint16_t position;
 extern volatile uint8_t* color_buffer;
 extern uint16_t base;
+extern int esc_seq[3];
 extern int y;
 extern int x;
 
