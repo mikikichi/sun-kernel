@@ -1,7 +1,5 @@
 
-#include "lib/io.h"
-#include "video/ega/text_mono.h"
-#include "video/video_init.h"
+#include "video/video_api.h"
 volatile uint8_t *color_buffer;
 uint16_t base = 0x0000;
 uint16_t position;

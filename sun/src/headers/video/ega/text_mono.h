@@ -8,9 +8,7 @@
 #define MAX_HEIGHT_M 25
 #define MAX_WIDTH_M 80
 
-#include <stdint.h>
-#include <stddef.h>
-#include "lib/strings.h"
+#include "lib/standard_lib.h"
 
 
 
@@ -27,7 +25,7 @@ void print(char *string);
 extern uint16_t position;
 extern volatile uint8_t* color_buffer;
 extern uint16_t base;
-extern int esc_seq[3];
+
 extern int y;
 extern int x;
 

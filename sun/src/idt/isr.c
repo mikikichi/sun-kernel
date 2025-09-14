@@ -1,6 +1,4 @@
-#include <stdbool.h>
-#include <stdint.h>
-#include <stddef.h>
+#include "lib/standard_lib.h"
 #include "program/exit.h"
 #include "lib/strings.h"
 

@@ -2,8 +2,7 @@
 #define PAGES_H
 
 
-#include <stdint.h>
-#include "lib/bool.h"
+#include "lib/standard_lib.h"
 
 
 #define PAGE_SIZE 4096 //decimal

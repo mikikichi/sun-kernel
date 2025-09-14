@@ -1,7 +1,7 @@
 #ifndef RANGES_H
 #define RANGES_H
 
-#include <stdint.h>
+#include "lib/standard_lib.h"
 
 typedef struct mm_range {
 	uint64_t av_base;

@@ -1,7 +1,7 @@
 #include "mult/ranges.h"
 #include "mult/memoryinfo.h"
 #include "mult/multibootinfo.h"
-#include <stdint.h>
+
 
 
 mm_range ranges;

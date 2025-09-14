@@ -1,7 +1,6 @@
 //eventually when new modes come mode switching will be handled here, so this api helps with me not needing to write code for each scenario!
 
-#include "video/ega/text_mono.h"
-#include "video/video_init.h"
+#include "video/video_api.h"
 
 
 //pos = y * MAX_WIDTH_M + x;

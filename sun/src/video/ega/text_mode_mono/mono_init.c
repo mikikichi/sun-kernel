@@ -1,7 +1,6 @@
 
-#include "lib/io.h"
-#include "video/ega/text_mono.h"
-#include <stddef.h>
+#include "video/video_api.h"
+
 
 //cursor starts at line 12 ends line 11 
 //80 columns number of character rows per screen 25

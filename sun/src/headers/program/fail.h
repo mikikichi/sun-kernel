@@ -1,7 +1,7 @@
 #ifndef FAIL_H
 #define FAIL_H
 
-#include <stdbool.h>
+#include "lib/standard_lib.h"
 #include "lib/strings.h"
 
 

@@ -1,6 +1,6 @@
 #ifndef MULTIBOOTINFO_H
 #define MULTIBOOTINFO_H
-#include <stdint.h>
+#include "lib/standard_lib.h"
 
 #define MULTIBOOT_HEADER 1
 
@@ -126,6 +126,5 @@ typedef struct basic_mem_info {
 void mb2_parse(uint32_t *multibootptr, uint32_t multiboot2_magic, uint64_t _kernel_start, uint64_t _kernel_end);
 void m2_mmap(basic_tag *tag);
 
-//great bunch of useless structs here that arent used at all? should prolly clean them up later
 
 #endif

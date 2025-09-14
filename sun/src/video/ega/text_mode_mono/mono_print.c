@@ -1,5 +1,4 @@
-#include "lib/io.h"
-#include "video/ega/text_mono.h"
+#include "video/video_api.h"
 
 
 void buffer_write(uint16_t pos, char c) {
@@ -43,3 +42,4 @@ void print(char *string) {
 	return;
 
 }
+

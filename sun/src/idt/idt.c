@@ -1,6 +1,4 @@
-#include <stdbool.h>
-#include <stdint.h>
-#include <stddef.h>
+#include "lib/standard_lib.h"
 #include "idt/idt.h"
 #include "lib/io.h"
 

@@ -1,5 +1,4 @@
-#include <stdbool.h>
-#include <stdint.h>
+#include "lib/standard_lib.h"
 #include "lib/io.h"
 
 extern uint8_t inb(uint16_t port);

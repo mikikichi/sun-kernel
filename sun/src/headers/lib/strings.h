@@ -1,8 +1,7 @@
 #ifndef STRINGS_H
 #define STRINGS_H
 
-#include <stdint.h>
-#include <stddef.h>
+#include "lib/standard_lib.h"
 
 int strcmp(const char *s1, const char *s2);
 size_t strlen(char *string);

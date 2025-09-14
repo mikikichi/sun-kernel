@@ -1,6 +1,4 @@
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
+#include "lib/standard_lib.h"
 
 int strcmp(const char *s1, const char *s2) {
 	const unsigned char *p1 = ( const unsigned char * )s1;

@@ -1,9 +1,7 @@
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
-#include <stddef.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include "lib/standard_lib.h"
 #include "exc/exception.h"
 
 void exception1();

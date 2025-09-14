@@ -1,9 +1,7 @@
 #ifndef IDT_H
 #define IDT_H
 
-#include <stdbool.h>
-#include <stdint.h>
-#include <stddef.h>
+#include "lib/standard_lib.h"
 
 
 typedef struct {

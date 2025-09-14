@@ -1,9 +1,4 @@
-#include <stdint.h>
-#include <stddef.h>
-#include <stdbool.h>
-#include "idt/idt.h"
-#include "mult/multibootinfo.h"
-#include "video/video_init.h"
+#include "kernel/kernel.h"
 
 
 extern uint32_t multiboot2_magic;
@@ -14,12 +9,11 @@ extern uint64_t _kernel_end;
 void kernel_main() {
 	//here eventually as soon as entry, remake paging in C and once we are in with the physical allocator start off a virtual allocator!!
 	//the page frame allocator will be called here to dynamically make paging entries, i think it should be fine for it to be done ASAP!
-	video_init(); //sets up ega/vga, no keyboard now though after theres screen input then yea
+	video_init(); //sets up ega/vga, no keyboard currently
 
 	uint32_t *m2ptr = (uint32_t *)(uintptr_t)multiboot2_ptr; 
 	mb2_parse(m2ptr, multiboot2_magic, _kernel_start, _kernel_end); 
 
-
-	//removed the tests for gdt and such cuz we would just insta fault no need to check
+	//does not hlt or call terminal loops
 
 }

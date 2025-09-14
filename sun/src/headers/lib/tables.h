@@ -1,7 +1,7 @@
 
 #ifndef TABLES_H
 #define TABLES_H
-#include <stdint.h>
+#include "lib/standard_lib.h"
 uint8_t esc_sequence[2];
 
 
