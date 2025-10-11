@@ -13,6 +13,6 @@ void ega_init() {
 	position = y * MAX_WIDTH_M + x; //should wrap this in a macro maybe?? would clean up the code
 	clear(position);
 
-	print("Welcome to the basic terminal for Lumenis Kernel!\nFeatures OFF: Keyboard");
+	print("Welcome to the basic terminal for Lumanis Kernel!\nFeatures OFF: Keyboard");
 
 }
