@@ -2,16 +2,16 @@
 
 # Custom Code
 
-- **The Sun Kernel**
+- **The Lumanis Kernel**
    - *License:* GNU GPL 3.0 (https://www.gnu.org/licenses/gpl-3.0.en.html)
-   - *Source:* https://github.com/mikikichi/sun-kernel
+   - *Source:* https://github.com/mikikichi/lumanis-kernel
    - *Creators:* GBX9570, Ghatt-O, cavnbinpkg, mikikichi
-   - *Summary:* The Source Code of the Sun Kernel.
+   - *Summary:* The Source Code of the Lumanis Kernel.
 
 # Third Party Code
 
 All third party code is used in accordance with their respective licenses. Any disputes
-should be put in the Issues section on the GitHub repository of the Sun Kernel Source Tree.
+should be put in the Issues section on the GitHub repository of the Lumanis Kernel Source Tree.
 
 nothing here right now
 
