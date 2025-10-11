@@ -1,5 +1,5 @@
 
-**☀️Sun Kernel☀️ ⭐x86-64⭐**                            
+**☀️Lumanis Kernel☀️ ⭐x86-64⭐**                            
 ==================================================
 
 ## 📜Questions💬
@@ -15,12 +15,13 @@ A. UEFI port will be made when most BIOS features are supported.
 
 
 ## 💾Features📼
-* EGA/VGA monochrome<sup>although monochrome buffer not tested due to limitations in emulation</sup>
+* VGA monochrome
 
 
 
 ## 🔔Plans🔎
 * PS/2 and serial keyboard.
+* Support for more VGA modes
 * Page frame buddy allocator.
 * Userspace.
 

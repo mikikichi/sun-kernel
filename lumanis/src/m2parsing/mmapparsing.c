@@ -1,7 +1,7 @@
 #include "mult/ranges.h"
 #include "mult/memoryinfo.h"
 #include "mult/multibootinfo.h"
-
+//clean up includes
 
 
 mm_range ranges;
@@ -15,9 +15,9 @@ defectmem bad_mem[64];
 
 
 void m2_mmap(basic_tag *tag) {
-	//ok I REALLY KINDA sorta hate this lmaoo it looks kinda ugly ughh...
 
 
+	//Clean up?
 	counts.av_count = 0;     
 	counts.re_count = 0;
 	counts.ac_count = 0;
@@ -27,15 +27,15 @@ void m2_mmap(basic_tag *tag) {
 	ranges.av_end = 0x0;
 
 
-	memoryentries *mmapentry; //here so its the same type
-	memorymap *mmtag = (memorymap *)tag; //just cast it to the mmtag when going through it to view like putting on goggles!
-        //its the same type so it knows what -> fields are  //arithmetic to get to the sizes max from the beginning value
+	memoryentries *mmapentry; //Counter of the same type
+	memorymap *mmtag = (memorymap *)tag; //Cast to mmtag type to view memory
+
 	uint8_t *end = (uint8_t *)mmtag + mmtag->size;
 	for (mmapentry = mmtag->entries; (uint8_t *)mmapentry < (uint8_t *)end; mmapentry = (memoryentries *)((uint8_t *) mmapentry + mmtag->entry_size)) {
 		switch (mmapentry->type){
 			case MULTIBOOT_MEMORY_AVAILABLE:
-			//its the goodies here that matter not rly the address of mmapentry or something it usually gets written easily
-			//eventually here make a check so avaible ram doesnt include kernel
+
+			//Add a check here so this doesn't include kernel and clean up the switch case
 			usableram *ram = usable + counts.av_count;
 			ram->addr = mmapentry->addr;
 			ram->len = mmapentry->len;

@@ -12,9 +12,6 @@
 
 
 void text_mono_init() {
-	//setup the sizes of screen and cursor, then notify sequencer
-	//b000 
-
 
 	io_outb_8(0x3C4, 0x00); //reset 
 	io_outb_8(0x3C5, 0x3);
@@ -22,7 +19,7 @@ void text_mono_init() {
 	//feature control 3DA/3BA
 	//set both lines to negative, vga autosynchs but ega doesnt
 	io_outb_8(0x3C2, 0xF6); //negative, odd/even so 11110110 clock 16 assumin mode 7 so odd even is on high page of 64kb
-	io_outb_8(0x3BA, 0x01); //bit 0, for FC0 logical high this prolly doesnt do anything in qemu but could in actual hardware
+	io_outb_8(0x3BA, 0x01); //bit 0, for FC0 logical high doesnt do anything in qemu
 	//page 330 ish
 
 	io_outb_8(0x3C4, 0x01);
@@ -77,10 +74,10 @@ void clear(uint16_t position) {
 
 
 	color_buffer = (uint8_t *)COLOR_BUFFER;
-	while (color_buffer[position] != 200) { //my theory is that this goes out of bounds if exceeds
+	while (color_buffer[position] != 200) { 
 		color_buffer[position] = 0x20;
 
-		position += 2;
+		position += 2; //color cell not filled however attribute should still be filled
 
 	}
 
