@@ -66,12 +66,12 @@ move:
 
 iso:
 	@echo "Moving ISO"
-	@mv kernel.bin $(HOME)/sun-kernel/sun/isofiles/boot
+	@mv kernel.bin $(HOME)/lumanis-kernel/lumanis/isofiles/boot
 	@echo "Creating ISO..."
 
-	@grub2-mkrescue -o sun.iso $(HOME)/sun-kernel/sun/isofiles
+	@grub2-mkrescue -o lumanis.iso $(HOME)/lumanis-kernel/lumanis/isofiles
 
 
 run: 
 	@echo "Running..."
-	@qemu-system-x86_64 -cdrom sun.iso
+	@qemu-system-x86_64 -cdrom lumanis.iso
