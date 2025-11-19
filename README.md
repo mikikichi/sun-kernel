@@ -1,6 +1,8 @@
 
 **☀️Lumanis Kernel☀️ ⭐x86-64⭐**                            
 ==================================================
+## This project is no longer maintained
+Lumanis formerly Sun Kernel is no longer maintained due to the lead moving on to other projects and plans. This repo is now archived. I thank everyone who has contributed.
 
 ## 📜Questions💬
 
